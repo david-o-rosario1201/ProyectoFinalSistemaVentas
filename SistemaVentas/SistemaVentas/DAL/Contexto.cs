@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Library.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace SistemaVentas.DAL;
 
@@ -8,4 +9,6 @@ public class Contexto : DbContext
     {
         
     }
+
+    public DbSet<Proveedores> Proveedores { get; set; }
 }
