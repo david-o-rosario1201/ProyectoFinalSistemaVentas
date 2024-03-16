@@ -20,6 +20,7 @@ namespace SistemaVentas.Migrations
                     FechaCreacion = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Nombre = table.Column<string>(type: "TEXT", nullable: false),
                     Direccion = table.Column<string>(type: "TEXT", nullable: false),
+                    Email = table.Column<string>(type: "TEXT", nullable: false),
                     TipoContribuyente = table.Column<string>(type: "TEXT", nullable: false),
                     RNC = table.Column<string>(type: "TEXT", nullable: false),
                     Nota = table.Column<string>(type: "TEXT", nullable: false),

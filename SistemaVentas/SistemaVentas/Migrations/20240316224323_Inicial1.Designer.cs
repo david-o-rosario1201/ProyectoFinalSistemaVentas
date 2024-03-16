@@ -11,41 +11,14 @@ using SistemaVentas.DAL;
 namespace SistemaVentas.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20240316223205_Contactos")]
-    partial class Contactos
+    [Migration("20240316224323_Inicial1")]
+    partial class Inicial1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
-
-            modelBuilder.Entity("Library.Models.Contactos", b =>
-                {
-                    b.Property<int>("ContactoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("ContactoId");
-
-                    b.ToTable("Contactos");
-
-                    b.HasData(
-                        new
-                        {
-                            ContactoId = 1,
-                            Descripcion = "Teléfono"
-                        },
-                        new
-                        {
-                            ContactoId = 2,
-                            Descripcion = "Fax"
-                        });
-                });
 
             modelBuilder.Entity("Library.Models.Proveedores", b =>
                 {
@@ -59,6 +32,10 @@ namespace SistemaVentas.Migrations
 
                     b.Property<bool>("Eliminado")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("TEXT");
