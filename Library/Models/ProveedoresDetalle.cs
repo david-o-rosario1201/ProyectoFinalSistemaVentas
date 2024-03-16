@@ -14,7 +14,7 @@ public class ProveedoresDetalle
 
     public int ProveedorId { get; set; }
 
-    public int TipoId { get; set; }
+    public int ContactoId { get; set; }
 
-    public string Telefono { get; set; }
+    public string Contacto { get; set; }
 }
