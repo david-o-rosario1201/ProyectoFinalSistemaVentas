@@ -7,25 +7,32 @@ namespace Library.Models;
 
 public class Proveedores
 {
-    [Key]
-    public int ProveedorId { get; set; }
+	[Key]
+	public int ProveedorId { get; set; }
 
-    [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-    public DateTime Fecha { get; set; } = DateTime.Today;
+	[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+	public DateTime FechaCreacion { get; set; } = DateTime.Today;
 
     [Required(ErrorMessage = "Debe ingresar un nombre")]
-    public string Nombre { get; set; } = string.Empty;
+	[RegularExpression(@"^[a-zA-ZñÑ\s]+$", ErrorMessage = "Este campo no acepta números ni caracteres especiales")]
+	public string Nombre { get; set; }
 
-    [EmailAddress(ErrorMessage = "Este email no es válido")]
-    [Required(ErrorMessage = "Debe ingresar un email")]
-    public string Email { get; set; }
+	[Required(ErrorMessage = "Debe ingresar una dirección")]
+	public string Direccion { get; set; }
 
-    [Phone(ErrorMessage = "El formato para el número de teléfono no es válido")]
-    [Required(ErrorMessage = "Debe ingresar un número de teléfono")]
-    public string Telefono { get; set; }
+	[Range(1, int.MaxValue, ErrorMessage = "Debe elegir un tipo de contribuyente")]
+	public string TipoContribuyente { get; set; }
+
+	[Required(ErrorMessage = "Debe ingresar un número de RNC")]
+	[RegularExpression(@"^[0-9]+$", ErrorMessage = "Solo se permiten números")]
+	public string RNC { get; set; }
+
+	public string Nota { get; set; }
+
+	public bool Eliminado { get; set; } = false;
 
 
 
-    [ForeignKey("ProveedorId")]
+	[ForeignKey("ProveedorId")]
     public ICollection<ProveedoresDetalle> ProveedoresDetalle { get; set; } = new List<ProveedoresDetalle>();
 }
