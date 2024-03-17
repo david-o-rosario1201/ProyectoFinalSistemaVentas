@@ -20,14 +20,15 @@ public class Proveedores
 	[Required(ErrorMessage = "Debe ingresar una dirección")]
 	public string Direccion { get; set; }
 
+	[Required(ErrorMessage = "Debe ingresar un email")]
 	[EmailAddress(ErrorMessage = "El formato para el email no es válido")]
 	public string Email { get; set; }
 
-	[Range(1, int.MaxValue, ErrorMessage = "Debe elegir un tipo de contribuyente")]
+	[Required(ErrorMessage = "Debe elegir un tipo de contribuyente")]
 	public string TipoContribuyente { get; set; }
 
 	[Required(ErrorMessage = "Debe ingresar un número de RNC")]
-	[RegularExpression(@"^[0-9]+$", ErrorMessage = "Solo se permiten números")]
+	[RegularExpression(@"^[0-9]{11}$", ErrorMessage = "El RNC debe tener exactamente 11 dígitos numéricos")]
 	public string RNC { get; set; }
 
 	public string Nota { get; set; }
