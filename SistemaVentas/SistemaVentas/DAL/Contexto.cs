@@ -12,6 +12,7 @@ public class Contexto : DbContext
 
     public DbSet<Proveedores> Proveedores { get; set; }
     public DbSet<Contactos> Contactos { get; set; }
+    public DbSet<TiposContribuyente> TiposContribuyente { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -21,5 +22,11 @@ public class Contexto : DbContext
             new Contactos { ContactoId = 1, Descripcion = "Teléfono"},
             new Contactos { ContactoId = 2, Descripcion = "Fax"}
         });
-    }
+
+		modelBuilder.Entity<TiposContribuyente>().HasData(new List<TiposContribuyente>
+		{
+			new TiposContribuyente { TipoContribuyenteId = 1, Descripcion = "Persona Física"},
+			new TiposContribuyente { TipoContribuyenteId = 2, Descripcion = "Persona Jurídica"}
+		});
+	}
 }
