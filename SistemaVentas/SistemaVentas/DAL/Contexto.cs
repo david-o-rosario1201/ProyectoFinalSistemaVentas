@@ -13,6 +13,9 @@ public class Contexto : DbContext
 	public DbSet<Proveedores> Proveedores { get; set; }
 	public DbSet<Contactos> Contactos { get; set; }
 	public DbSet<TiposContribuyente> TiposContribuyente { get; set; }
+	public DbSet<Productos> Productos { get; set; }
+	public DbSet<Categorias> Categorias { get; set; }
+	public DbSet<Ventas> Ventas { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaVentas.DAL;
 
@@ -10,9 +11,11 @@ using SistemaVentas.DAL;
 namespace SistemaVentas.Migrations
 {
     [DbContext(typeof(Contexto))]
-    partial class ContextoModelSnapshot : ModelSnapshot
+    [Migration("20240317003914_Categorias")]
+    partial class Categorias
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
@@ -263,57 +266,6 @@ namespace SistemaVentas.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Library.Models.Ventas", b =>
-                {
-                    b.Property<int>("VentaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<float>("Devolucion")
-                        .HasColumnType("REAL");
-
-                    b.Property<bool>("Eliminado")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("TEXT");
-
-                    b.Property<float>("MontoTotal")
-                        .HasColumnType("REAL");
-
-                    b.Property<float>("Pago")
-                        .HasColumnType("REAL");
-
-                    b.HasKey("VentaId");
-
-                    b.ToTable("Ventas");
-                });
-
-            modelBuilder.Entity("Library.Models.VentasDetalle", b =>
-                {
-                    b.Property<int>("VentaDetalleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<float>("Cantidad")
-                        .HasColumnType("REAL");
-
-                    b.Property<bool>("Eliminado")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ProductoId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("VentaId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("VentaDetalleId");
-
-                    b.HasIndex("VentaId");
-
-                    b.ToTable("VentasDetalle");
-                });
-
             modelBuilder.Entity("Library.Models.ProductoDetalle", b =>
                 {
                     b.HasOne("Library.Models.Productos", null)
@@ -341,15 +293,6 @@ namespace SistemaVentas.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Library.Models.VentasDetalle", b =>
-                {
-                    b.HasOne("Library.Models.Ventas", null)
-                        .WithMany("VentaDetalle")
-                        .HasForeignKey("VentaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Library.Models.Categorias", b =>
                 {
                     b.Navigation("Productos");
@@ -363,11 +306,6 @@ namespace SistemaVentas.Migrations
             modelBuilder.Entity("Library.Models.Proveedores", b =>
                 {
                     b.Navigation("ProveedoresDetalle");
-                });
-
-            modelBuilder.Entity("Library.Models.Ventas", b =>
-                {
-                    b.Navigation("VentaDetalle");
                 });
 #pragma warning restore 612, 618
         }
