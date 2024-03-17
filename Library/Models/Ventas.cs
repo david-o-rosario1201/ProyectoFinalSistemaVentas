@@ -9,7 +9,6 @@ public class Ventas
 	public int VentaId { get; set; }
 	[DataType(DataType.DateTime)]
 	public DateTime Fecha { get; set; } = DateTime.Today;
-	public string Estado { get; set; } = string.Empty;
 	public float MontoTotal { get; set; }
 	public bool Eliminado { get; set; } = false;
 	public float Pago { get; set; }
