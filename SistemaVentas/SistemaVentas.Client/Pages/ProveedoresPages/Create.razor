@@ -50,7 +50,7 @@
 						@*TipoContribuyente*@
 						<label class="form-label" for="ipoContribuyente"><strong>Tipo de Contribuyente:</strong></label>
 						<InputSelect id="tipoContribuyente" class="form-select" @bind-Value="proveedor.TipoContribuyente">
-							<option>Elija una opci&oacute;n</option>
+							<option value="0">Elija una opci&oacute;n</option>
 							@foreach (var tipo in tiposContribuyente)
 							{
 								<option value="@tipo.Descripcion">@tipo.Descripcion</option>
