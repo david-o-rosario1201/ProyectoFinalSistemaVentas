@@ -1,0 +1,254 @@
+﻿@page "/CreateVentas"
+@* @inject HttpClient httpClient *@
+@rendermode InteractiveAuto
+@inject NavigationManager navigation
+
+<PageTitle>Crear Nueva Venta</PageTitle>
+<EditForm Model="venta" OnValidSubmit="Crear" FormName="RegistroVentas">
+	<DataAnnotationsValidator />
+	<div class="container">
+		<div class="card shadow-lg">
+			@*Header*@
+			<div class="card-header">
+				<h3 class="align-text-center"><strong>Crear Nueva Venta</strong></h3>
+			</div>
+			@*Cuerpo*@
+			<div class="card-body">
+				<div class="row mb-3">
+					<div class="col-4">
+						@*Venta Id*@
+						<label class="form-label" for="ventaId"><strong>VentaId:</strong></label>
+						<InputNumber id="ventaId" class="form-control" @bind-Value="venta.VentaId" readonly></InputNumber>
+					</div>
+					<div class="col-4">
+						@*Fecha*@
+						<label class="form-label" for="fecha"><strong>Fecha:</strong></label>
+						<InputDate id="fecha" class="form-control" @bind-Value="venta.Fecha" readonly></InputDate>
+						<ValidationMessage For="@(() => venta.Fecha)"></ValidationMessage>
+					</div>
+					<div class="col-2">
+						@*SubTotal*@
+						<label class="form-label" for="subtotal"><strong>SubTotal:</strong></label>
+						<InputNumber id="subtotal" class="form-control" @bind-Value="venta.SubTotal" readonly></InputNumber>
+						<ValidationMessage For="@(() => venta.SubTotal)"></ValidationMessage>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-3">
+						@*Devolucion*@
+						<label class="form-label" for="devolucion"><strong>Devoluci&oacute;n:</strong></label>
+						<InputNumber id="devolucion" class="form-control" @bind-Value="venta.Devolucion" readonly></InputNumber>
+						<ValidationMessage For="@(() => venta.Devolucion)"></ValidationMessage>
+					</div>
+					<div class="col-3">
+						@*Pago*@
+						<label class="form-label" for="pago"><strong>Pago:</strong></label>
+						<InputNumber id="pago" class="form-control" @bind-Value="venta.Pago"></InputNumber>
+						<ValidationMessage For="@(() => venta.Pago)"></ValidationMessage>
+					</div>
+				</div>
+				@*ventasDetalles*@
+				<fieldset class="border-primmary border border-2">
+					@*Body*@
+					<div class="card-body">
+						<section class="row mb-4">
+							<h3><strong>Agregar Productos</strong></h3>
+							<div class="row align-content-center">
+								@*Producto*@
+								<div class="col-4">
+									<label class="form-label" for="producto"><strong>Producto:</strong></label>
+									<InputSelect id="producto" class="form-select" @bind-Value="producto">
+										<option>Elija una opci&oacute;n</option>
+										@foreach (var producto in listaProductos)
+										{
+											<option value="@producto.Nombre">@producto.Nombre</option>
+										}
+									</InputSelect>
+								</div>
+								@*Cantidad*@
+								<div class="col-2">
+									<label class="form-label" for="cantidad"><strong>Cantidad:</strong></label>
+									<InputNumber id="cantidad" class="form-control" @bind-Value="cantidad"></InputNumber>
+								</div>
+								@*Boton*@
+								<div class="col-4 d-flex align-items-end">
+									<button type="button" class="btn btn-outline-success" @onclick="AgregarDetalle"><i class="bi bi-plus-circle" /> Agregar</button>
+								</div>
+							</div>
+						</section>
+						<section>
+							@if (venta.VentaDetalle.Count > 0)
+							{
+								@*Table Detalles*@
+								<table class="table table-bordered miTabla">
+									<thead>
+										<tr>
+											<th>Producto</th>
+											<th>Cantidad</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var detalle in venta.VentaDetalle)
+										{
+											<tr>
+												<td></td>
+												<td>@detalle.ProductoId</td>
+												<td>@detalle.Cantidad</td>
+												<td><button type="button" class="btn btn-outline-danger" @onclick="()=> EliminarDetalle(detalle)"><i class="bi bi-trash3-fill" /></button></td>
+											</tr>
+										}
+									</tbody>
+								</table>
+								<p class="float-start"><strong>Total de Detalles: </strong>@venta.VentaDetalle.Count</p>
+							}
+						</section>
+					</div>
+				</fieldset>
+			</div>
+			@*Footer*@
+			<div class="card-footer d-flex justify-content-center">
+				<div class="px-2">
+					<button type="button" class="btn btn-outline-primary" @onclick="Volver"><i class="bi bi-box-arrow-left" /> Volver</button>
+				</div>
+				<button type="submit" class="btn btn-outline-success">
+					<i class="bi bi-floppy-fill" /> Crear
+				</button>
+			</div>
+		</div>
+	</div>
+</EditForm>
+@mensaje
+
+@code {
+	public Ventas venta { get; set; } = new Ventas();
+	public string mensaje { get; set; } = string.Empty;
+	public List<Productos> listaProductos = new List<Productos>();
+	public string producto { get; set; } = string.Empty;
+	public float cantidad { get; set; } = 0;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(500);
+
+		// clientes = await httpClient.GetFromJsonAsync<List<Clientes>>("api/Clientes");
+		// sistemas = await httpClient.GetFromJsonAsync<List<Sistemas>>("api/Sistemas");
+		// prioridades = await httpClient.GetFromJsonAsync<List<Prioridades>>("api/Prioridades");
+	}
+
+	public async Task Crear()
+	{
+		// if (!await ValidarTicket())
+		// {
+		// 	return;
+		// }
+		// else
+		// {
+		// 	var response = await httpClient.PostAsJsonAsync("api/Tickets", proveedor);
+		// 	if (response.IsSuccessStatusCode)
+		// 	{
+		// 		mensaje = "Se guardo el ticket";
+		// 		StateHasChanged();
+		// 		await Task.Delay(2000);
+		// 		Volver();
+		// 	}
+		// 	else
+		// 	{
+		// 		mensaje = "No se guardo el ticket";
+		// 	}
+		// }
+
+		mensaje = "Se creo";
+	}
+
+	public async Task AgregarDetalle()
+	{
+		@* if (!string.IsNullOrEmpty(message) && !string.IsNullOrEmpty(transmitter))
+		{
+			if (!await ValidarDetalle())
+			{
+				return;
+			}
+			else
+			{
+				var nuevoDetalle = new TicketsDetalle { Emisor = transmitter, Mensaje = message };
+				proveedor.TicketsDetalle.Add(nuevoDetalle);
+			}
+		}
+		else
+			mensaje = "No deben haber campos vacíos";
+
+		StateHasChanged();
+		await LimpiarPantalla(); *@
+	}
+
+	@* public async Task<bool> ValidarTicket()
+	{
+		var tickets = await httpClient.GetFromJsonAsync<List<Tickets>>("api/Tickets");
+		var asunto = tickets.Where(t => t.Asunto.Equals(proveedor.Asunto));
+		var solicitadoPor = tickets.Where(t => t.SolicitadoPor.Equals(proveedor.SolicitadoPor));
+		var descripcion = tickets.Where(t => t.Descripcion.Equals(proveedor.Descripcion));
+
+		if (asunto.Any())
+		{
+			mensaje = "Ya existe un ticket con este asunto";
+			return false;
+		}
+		if (solicitadoPor.Any())
+		{
+			mensaje = "Ya existe un ticket con este solicitado por";
+			return false;
+		}
+		if (descripcion.Any())
+		{
+			mensaje = "Ya existe un ticket con esta descripción";
+			return false;
+		}
+
+		return true;
+	} *@
+
+	@* public async Task<bool> ValidarDetalle()
+	{
+
+		foreach (var ticket in proveedor.TicketsDetalle)
+		{
+			if (ticket.Mensaje == message)
+			{
+				mensaje = "Ya existe un detalle con este mensaje";
+				return false;
+			}
+			if (ticket.Emisor == transmitter)
+			{
+				mensaje = "Ya existe un detalle con este emisor";
+				return false;
+			}
+		}
+
+		return true;
+	} *@
+
+	public async Task EliminarDetalle(VentasDetalle detalle)
+	{
+		venta.VentaDetalle.Remove(detalle);
+	}
+
+	public async Task LimpiarPantalla()
+	{
+		// message = string.Empty;
+		// transmitter = string.Empty;
+		// await Task.Delay(2000);
+		// mensaje = string.Empty;
+	}
+
+	// public string ObtenerDescripcion(int id)
+	// {
+	// 	// var descripcion = accesorios.FirstOrDefault(a => a.AccesorioId == id);
+	// 	// return descripcion.Descripcion;
+	// }
+
+	void Volver()
+	{
+		navigation.NavigateTo("/Ventas");
+	}
+}
