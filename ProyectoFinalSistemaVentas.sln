@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaVentas", "SistemaVen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaVentas.Client", "SistemaVentas\SistemaVentas.Client\SistemaVentas.Client.csproj", "{9EA4FC97-84B4-435F-9948-AA5ADF104241}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Library\Shared.csproj", "{F3876B79-FCDD-4A5C-9C5C-A66DA3ED5913}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library", "Library\Library.csproj", "{F3876B79-FCDD-4A5C-9C5C-A66DA3ED5913}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
