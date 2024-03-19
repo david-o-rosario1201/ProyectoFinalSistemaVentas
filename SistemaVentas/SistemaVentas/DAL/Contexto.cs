@@ -1,4 +1,4 @@
-﻿using Library.Models;
+﻿using Shared.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace SistemaVentas.DAL;
