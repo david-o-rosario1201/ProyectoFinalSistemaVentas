@@ -9,7 +9,7 @@ public class Ventas
 	public int VentaId { get; set; }
 	[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
 	public DateTime Fecha { get; set; } = DateTime.Today;
-	public float MontoTotal { get; set; }
+	public float SubTotal { get; set; }
 	public bool Eliminado { get; set; } = false;
 	public float Pago { get; set; }
 	public float Devolucion { get; set; }
