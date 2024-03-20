@@ -1,0 +1,185 @@
+﻿@page "/CreateClientes"
+@* @inject HttpClient httpClient *@
+@rendermode InteractiveAuto
+@inject NavigationManager navigation
+
+<PageTitle>Crear Nuevo Cliente</PageTitle>
+<EditForm Model="cliente" OnValidSubmit="Crear" FormName="RegistroClientes">
+	<DataAnnotationsValidator />
+	<div class="container">
+		<div class="card shadow-lg">
+			@*Header*@
+			<div class="card-header">
+				<h3><strong>Crear Nuevo Cliente</strong></h3>
+			</div>
+			@*Cuerpo*@
+			<div class="card-body">
+				<div class="row mb-3">
+					<div class="col-4">
+						@*Cliente Id*@
+						<label class="form-label" for="clienteId"><strong>ClienteId:</strong></label>
+						<InputNumber id="clienteId" class="form-control" @bind-Value="cliente.ClienteId" readonly></InputNumber>
+					</div>
+					<div class="col-4">
+						@*FechaCreacion*@
+						<label class="form-label" for="fecha"><strong>Fecha Creaci&oacute;n:</strong></label>
+						<InputDate id="fecha" class="form-control" @bind-Value="cliente.FechaCreacion" readonly></InputDate>
+						<ValidationMessage For="@(() => cliente.FechaCreacion)"></ValidationMessage>
+					</div>
+					<div class="col-4">
+						@*Nombre*@
+						<label class="form-label" for="nombre"><strong>Nombre:</strong></label>
+						<InputText id="nombre" class="form-control" @bind-Value="cliente.Nombre" placeholder="Ej: Juan Pérez"></InputText>
+						<ValidationMessage For="@(() => cliente.Nombre)"></ValidationMessage>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-4">
+						@*Cedula*@
+						<label class="form-label" for="cedula"><strong>Cedula:</strong></label>
+						<label>(Sin guiones)</label>
+						<InputText id="cedula" class="form-control" @bind-Value="cliente.Cedula" placeholder="Ej: 40234573653"></InputText>
+						<ValidationMessage For="@(() => cliente.Cedula)"></ValidationMessage>
+					</div>
+					<div class="col-4">
+						@*Direccion*@
+						<label class="form-label" for="direccion"><strong>Direcci&oacute;n:</strong></label>
+						<InputText id="direccion" class="form-control" @bind-Value="cliente.Direccion" placeholder="Ej: Ave. Libertad #23"></InputText>
+						<ValidationMessage For="@(() => cliente.Direccion)"></ValidationMessage>
+					</div>
+					
+					<div class="col-4">
+						@*Telefono*@
+						<label class="form-label" for="telefono"><strong>Tel&eacute;fono:</strong></label>
+						<InputText id="telefono" class="form-control" @bind-Value="cliente.Telefono"></InputText>
+						<ValidationMessage For="@(() => cliente.Telefono)"></ValidationMessage>
+					</div>
+				</div>
+			</div>
+			@*Footer*@
+			<div class="card-footer d-flex justify-content-center">
+				<div class="px-2">
+					<button type="button" class="btn btn-outline-primary" @onclick="Volver"><i class="bi bi-box-arrow-left" /> Volver</button>
+				</div>
+				<button type="submit" class="btn btn-outline-success"><i class="bi bi-floppy-fill" /> Crear</button>
+			</div>
+		</div>
+	</div>
+</EditForm>
+@mensaje
+
+@code {
+	public Clientes cliente { get; set; } = new Clientes();
+	public List<TiposContribuyente> tiposContribuyente = new List<TiposContribuyente>();
+	public List<Contactos> contactos = new List<Contactos>();
+	public int tipo { get; set; }
+	public string contacto { get; set; } = string.Empty;
+	public string mensaje { get; set; } = string.Empty;
+	// public List<Clientes> clientes = new List<Clientes>();
+	// public List<Sistemas> sistemas = new List<Sistemas>();
+	// public List<Prioridades> prioridades = new List<Prioridades>();
+	// public string mensaje { get; set; } = string.Empty;
+	//
+	// public string message { get; set; } = string.Empty;
+	// public string ultimo { get; set; } = string.Empty;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(500);
+
+		// clientes = await httpClient.GetFromJsonAsync<List<Clientes>>("api/Clientes");
+		// sistemas = await httpClient.GetFromJsonAsync<List<Sistemas>>("api/Sistemas");
+		// prioridades = await httpClient.GetFromJsonAsync<List<Prioridades>>("api/Prioridades");
+	}
+
+	public async Task Crear()
+	{
+		// if (!await ValidarTicket())
+		// {
+		// 	return;
+		// }
+		// else
+		// {
+		// 	var response = await httpClient.PostAsJsonAsync("api/Tickets", proveedor);
+		// 	if (response.IsSuccessStatusCode)
+		// 	{
+		// 		mensaje = "Se guardo el ticket";
+		// 		StateHasChanged();
+		// 		await Task.Delay(2000);
+		// 		Volver();
+		// 	}
+		// 	else
+		// 	{
+		// 		mensaje = "No se guardo el ticket";
+		// 	}
+		// }
+
+		mensaje = "Se creo";
+	}
+
+	@* public async Task<bool> ValidarTicket()
+	{
+		var tickets = await httpClient.GetFromJsonAsync<List<Tickets>>("api/Tickets");
+		var asunto = tickets.Where(t => t.Asunto.Equals(proveedor.Asunto));
+		var solicitadoPor = tickets.Where(t => t.SolicitadoPor.Equals(proveedor.SolicitadoPor));
+		var descripcion = tickets.Where(t => t.Descripcion.Equals(proveedor.Descripcion));
+
+		if (asunto.Any())
+		{
+			mensaje = "Ya existe un ticket con este asunto";
+			return false;
+		}
+		if (solicitadoPor.Any())
+		{
+			mensaje = "Ya existe un ticket con este solicitado por";
+			return false;
+		}
+		if (descripcion.Any())
+		{
+			mensaje = "Ya existe un ticket con esta descripción";
+			return false;
+		}
+
+		return true;
+	} *@
+
+	@* public async Task<bool> ValidarDetalle()
+	{
+
+		foreach (var ticket in proveedor.TicketsDetalle)
+		{
+			if (ticket.Mensaje == message)
+			{
+				mensaje = "Ya existe un detalle con este mensaje";
+				return false;
+			}
+			if (ticket.Emisor == transmitter)
+			{
+				mensaje = "Ya existe un detalle con este emisor";
+				return false;
+			}
+		}
+
+		return true;
+	} *@
+
+
+	public async Task LimpiarPantalla()
+	{
+		// message = string.Empty;
+		// transmitter = string.Empty;
+		// await Task.Delay(2000);
+		// mensaje = string.Empty;
+	}
+
+	// public string ObtenerDescripcion(int id)
+	// {
+	// 	// var descripcion = accesorios.FirstOrDefault(a => a.AccesorioId == id);
+	// 	// return descripcion.Descripcion;
+	// }
+
+	void Volver()
+	{
+		navigation.NavigateTo("/Clientes");
+	}
+}
