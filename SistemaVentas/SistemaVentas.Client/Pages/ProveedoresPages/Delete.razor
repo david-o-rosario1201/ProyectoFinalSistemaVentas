@@ -1,5 +1,213 @@
-﻿<h3>Delete</h3>
+﻿@page "/DeleteProveedores"
+@page "/DeleteProveedores/proveedorId={proveedorId:int}"
+@* @inject HttpClient httpClient *@
+@rendermode InteractiveAuto
+@inject NavigationManager navigation
+
+<PageTitle>Eliminar Proveedor</PageTitle>
+<div class="container">
+	<div class="card shadow-lg">
+		@*Header*@
+		<div class="card-header">
+			<h3><strong>Eliminar Proveedor</strong></h3>
+		</div>
+		@*Cuerpo*@
+		<div class="card-body">
+			<h3><strong>¿Est&aacute;s seguro de que quieres eliminar a este proveedor?</strong></h3>
+			@*Datos*@
+			<ul>
+				<li><strong>ProveedorId:</strong> @proveedor.ProveedorId</li>
+				<li><strong>FechaCreacion:</strong> @proveedor.FechaCreacion</li>
+				<li><strong>Nombre:</strong> @proveedor.Nombre</li>
+				<li><strong>Direcci&oacute;n:</strong> @proveedor.Direccion</li>
+				<li><strong>Email:</strong> @proveedor.Email</li>
+				<li><strong>TipoContribuyente:</strong> @proveedor.TipoContribuyente</li>
+				<li><strong>RNC:</strong> @proveedor.RNC</li>
+				<li><strong>Nota:</strong> @proveedor.Nota</li>
+			</ul>
+
+			@*ProveedoresDetalles*@
+			<fieldset class="border-primmary border border-2">
+				@*Body*@
+				<div class="card-body">
+					<section>
+						@if (proveedor.ProveedoresDetalle.Count > 0)
+						{
+							@*Table Detalles*@
+							<table class="table table-bordered miTabla">
+								<thead>
+									<tr>
+										<th>Tipo de Contacto</th>
+										<th>Contacto</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (var detalle in proveedor.ProveedoresDetalle)
+									{
+										<tr>
+											<td></td>
+											<td>@detalle.Contacto</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+							<p><strong>Total de Detalles: </strong>@proveedor.ProveedoresDetalle.Count</p>
+						}
+					</section>
+				</div>
+			</fieldset>
+		</div>
+		@*Footer*@
+		<div class="card-footer d-flex justify-content-center">
+			<div class="px-2">
+				<button type="button" class="btn btn-outline-dark" @onclick="Volver"><i class="bi bi-box-arrow-left" /> Cancelar</button>
+			</div>
+			<button type="button" class="btn btn-outline-danger" @onclick="Eliminar"><i class="bi bi-trash3-fill" /> Eliminar</button>
+		</div>
+	</div>
+</div>
+@mensaje
 
 @code {
+	[Parameter]
+	public int proveedorId { get; set; }
 
+	public Proveedores proveedor { get; set; } = new Proveedores();
+	public List<TiposContribuyente> tiposContribuyente = new List<TiposContribuyente>();
+	public List<Contactos> contactos = new List<Contactos>();
+	public int tipo { get; set; }
+	public string contacto { get; set; } = string.Empty;
+	public string mensaje { get; set; } = string.Empty;
+	// public List<Clientes> clientes = new List<Clientes>();
+	// public List<Sistemas> sistemas = new List<Sistemas>();
+	// public List<Prioridades> prioridades = new List<Prioridades>();
+	// public string mensaje { get; set; } = string.Empty;
+	//
+	// public string message { get; set; } = string.Empty;
+	// public string ultimo { get; set; } = string.Empty;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(500);
+
+		// clientes = await httpClient.GetFromJsonAsync<List<Clientes>>("api/Clientes");
+		// sistemas = await httpClient.GetFromJsonAsync<List<Sistemas>>("api/Sistemas");
+		// prioridades = await httpClient.GetFromJsonAsync<List<Prioridades>>("api/Prioridades");
+	}
+
+	public async Task Eliminar()
+	{
+		// if (!await ValidarTicket())
+		// {
+		// 	return;
+		// }
+		// else
+		// {
+		// 	var response = await httpClient.PostAsJsonAsync("api/Tickets", proveedor);
+		// 	if (response.IsSuccessStatusCode)
+		// 	{
+		// 		mensaje = "Se guardo el ticket";
+		// 		StateHasChanged();
+		// 		await Task.Delay(2000);
+		// 		Volver();
+		// 	}
+		// 	else
+		// 	{
+		// 		mensaje = "No se guardo el ticket";
+		// 	}
+		// }
+
+		mensaje = "Se creo";
+	}
+
+	public async Task AgregarDetalle()
+	{
+		@* if (!string.IsNullOrEmpty(message) && !string.IsNullOrEmpty(transmitter))
+		{
+			if (!await ValidarDetalle())
+			{
+				return;
+			}
+			else
+			{
+				var nuevoDetalle = new TicketsDetalle { Emisor = transmitter, Mensaje = message };
+				proveedor.TicketsDetalle.Add(nuevoDetalle);
+			}
+		}
+		else
+			mensaje = "No deben haber campos vacíos";
+
+		StateHasChanged();
+		await LimpiarPantalla(); *@
+	}
+
+	@* public async Task<bool> ValidarTicket()
+	{
+		var tickets = await httpClient.GetFromJsonAsync<List<Tickets>>("api/Tickets");
+		var asunto = tickets.Where(t => t.Asunto.Equals(proveedor.Asunto));
+		var solicitadoPor = tickets.Where(t => t.SolicitadoPor.Equals(proveedor.SolicitadoPor));
+		var descripcion = tickets.Where(t => t.Descripcion.Equals(proveedor.Descripcion));
+
+		if (asunto.Any())
+		{
+			mensaje = "Ya existe un ticket con este asunto";
+			return false;
+		}
+		if (solicitadoPor.Any())
+		{
+			mensaje = "Ya existe un ticket con este solicitado por";
+			return false;
+		}
+		if (descripcion.Any())
+		{
+			mensaje = "Ya existe un ticket con esta descripción";
+			return false;
+		}
+
+		return true;
+	} *@
+
+	@* public async Task<bool> ValidarDetalle()
+	{
+
+		foreach (var ticket in proveedor.TicketsDetalle)
+		{
+			if (ticket.Mensaje == message)
+			{
+				mensaje = "Ya existe un detalle con este mensaje";
+				return false;
+			}
+			if (ticket.Emisor == transmitter)
+			{
+				mensaje = "Ya existe un detalle con este emisor";
+				return false;
+			}
+		}
+
+		return true;
+	} *@
+
+	public async Task EliminarDetalle(ProveedoresDetalle detalle)
+	{
+		proveedor.ProveedoresDetalle.Remove(detalle);
+	}
+
+	public async Task LimpiarPantalla()
+	{
+		// message = string.Empty;
+		// transmitter = string.Empty;
+		// await Task.Delay(2000);
+		// mensaje = string.Empty;
+	}
+
+	// public string ObtenerDescripcion(int id)
+	// {
+	// 	// var descripcion = accesorios.FirstOrDefault(a => a.AccesorioId == id);
+	// 	// return descripcion.Descripcion;
+	// }
+
+	void Volver()
+	{
+		navigation.NavigateTo("/Proveedores");
+	}
 }

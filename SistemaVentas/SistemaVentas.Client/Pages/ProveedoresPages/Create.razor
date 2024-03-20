@@ -63,13 +63,14 @@
 					<div class="col-4">
 						@*RNC*@
 						<label class="form-label" for="rnc"><strong>RNC:</strong></label>
-						<label><em>Nota: sin guiones</em></label>
+						<label><em>(Sin guiones)</em></label>
 						<InputText id="rnc" class="form-control" @bind-Value="proveedor.RNC" placeholder="40234573653"></InputText>
 						<ValidationMessage For="@(() => proveedor.RNC)"></ValidationMessage>
 					</div>
 					<div class="col-8">
 						@*Nota*@
 						<label class="form-label" for="nota"><strong>Nota:</strong></label>
+						<label><em>(Opcional)</em></label>
 						<InputTextArea id="nota" class="form-control" @bind-Value="proveedor.Nota" placeholder="Ingrese una nota"></InputTextArea>
 						<ValidationMessage For="@(() => proveedor.Nota)"></ValidationMessage>
 					</div>
@@ -137,9 +138,7 @@
 				<div class="px-2">
 					<button type="button" class="btn btn-outline-primary" @onclick="Volver"><i class="bi bi-box-arrow-left" /> Volver</button>
 				</div>
-				<button type="submit" class="btn btn-outline-success">
-					<i class="bi bi-floppy-fill" /> Crear
-				</button>
+				<button type="submit" class="btn btn-outline-success"><i class="bi bi-floppy-fill" /> Crear</button>
 			</div>
 		</div>
 	</div>
