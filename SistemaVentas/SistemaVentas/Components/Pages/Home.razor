@@ -1,7 +1,40 @@
-﻿@page "/"
+﻿@page "/Home"
+@inject NavigationManager navigation
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+@* <div class="d-flex justify-content-center">
+    <img src="/Imagenes/vendedor.png" style="width: 200px; height: auto; margin-right: 10px;" />
+</div>
+<h1 class="miMensaje"><strong>Sistema de Ventas</strong></h1>
 
-Welcome to your new app.
+<div class="card" style="width:1000px">
+    <div class="card-body">
+        <div class="row justify-content-center">
+            <div class="col-md-4 text-center">
+                <button type="button" class="d-block mx-auto" @onclick="IrAClientes">
+                    <img src="Imagenes/clasificacion.png" class="icon" style="width: 200px; height: auto; margin-right: 10px;" />Clientes
+                </button>
+            </div>
+            <div class="col-md-4 text-center">
+                <button class="d-block mx-auto" @onclick="IrAProveedores">
+                    <img src="Imagenes/repartidor.png" class="icon" style="width: 200px; height: auto; margin-right: 10px;" />Proveedores
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private void IrAClientes()
+    {
+        navigation.NavigateTo("/Clientes");
+    }
+
+    private void IrAProveedores()
+    {
+        navigation.NavigateTo("/Proveedores");
+    }
+} *@
