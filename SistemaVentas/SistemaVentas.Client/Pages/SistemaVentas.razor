@@ -36,7 +36,7 @@
                     <div class="col-md-3 text-center">
                         <button type="button" class="d-block mx-auto borde" @onclick="IrAProductos">
                             <h6><strong>Productos</strong></h6>
-                            <img src="Imagenes/bienes.png" class="icon" style="width: 150px; height: auto; margin-right: 10px;" />
+                            <img src="Imagenes/productos-lacteos.png" class="icon" style="width: 150px; height: auto; margin-right: 10px;" />
                         </button>
                     </div>
                 </div>
@@ -49,34 +49,41 @@
                             <img src="Imagenes/bolsa-de-valores.png" class="icon" style="width: 150px; height: auto; margin-right: 10px;" />
                         </button>
                     </div>
-                    @*Vacio 1*@
+                    @*Categorias*@
                     <div class="col-md-3 text-center">
                         <button type="button" class="d-block mx-auto borde" @onclick="IrAClientes">
-                            <h6><strong>Vacio 1</strong></h6>
-                            <img src="Imagenes/advertencia.png" class="icon" style="width: 150px; height: auto; margin-right: 10px;" />
+                            <h6><strong>Categor&iacute;as</strong></h6>
+                            <img src="Imagenes/canasta.png" class="icon" style="width: 150px; height: auto; margin-right: 10px;" />
                         </button>
                     </div>
-                    @*Vacio 2*@
+                    @*Inventario*@
                     <div class="col-md-3 text-center">
                         <button class="d-block mx-auto borde" @onclick="IrAProveedores">
-                            <h6><strong>Vacio 2</strong></h6>
-                            <img src="Imagenes/advertencia.png" class="icon" style="width: 150px; height: auto; margin-right: 10px;" />
+                            <h6><strong>Inventario</strong></h6>
+                            <img src="Imagenes/la-gestion-del-inventario.png" class="icon" style="width: 150px; height: auto; margin-right: 10px;" />
                         </button>
                     </div>
                 </div>
                 @*Fila #3*@
                 <div class="row justify-content-center mb-5">
-                    @*Vacio 3*@
+                    @*Reportes*@
                     <div class="col-md-3 text-center">
                         <button class="d-block mx-auto borde" @onclick="IrAVentas">
-                            <h6><strong>Vacio 3</strong></h6>
-                            <img src="Imagenes/advertencia.png" class="icon" style="width: 150px; height: auto; margin-right: 10px;" />
+                            <h6><strong>Reportes</strong></h6>
+                            <img src="Imagenes/reporte.png" class="icon" style="width: 150px; height: auto; margin-right: 10px;" />
                         </button>
                     </div>
-                    @*Vacio 4*@
+                    @*Acerca de*@
                     <div class="col-md-3 text-center">
-                        <button type="button" class="d-block mx-auto borde" @onclick="IrAClientes">
-                            <h6><strong>Vacio 4</strong></h6>
+                        <button type="button" class="d-block mx-auto borde" @onclick="IrAAcercaDe">
+                            <h6><strong>Acerca de</strong></h6>
+                            <img src="Imagenes/acerca-de.png" class="icon" style="width: 150px; height: auto; margin-right: 10px;" />
+                        </button>
+                    </div>
+                    @*Vacio*@
+                    <div class="col-md-3 text-center">
+                        <button type="button" class="d-block mx-auto borde" @onclick="IrAAcercaDe">
+                            <h6><strong>Vacio</strong></h6>
                             <img src="Imagenes/advertencia.png" class="icon" style="width: 150px; height: auto; margin-right: 10px;" />
                         </button>
                     </div>
@@ -104,5 +111,9 @@
     private void IrAProductos()
     {
         navigation.NavigateTo("/Productos");
+    }
+    private void IrAAcercaDe()
+    {
+        navigation.NavigateTo("/AcercaDe");
     }
 }
