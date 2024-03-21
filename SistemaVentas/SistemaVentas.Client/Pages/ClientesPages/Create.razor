@@ -51,7 +51,8 @@
 					<div class="col-4">
 						@*Telefono*@
 						<label class="form-label" for="telefono"><strong>Tel&eacute;fono:</strong></label>
-						<InputText id="telefono" class="form-control" @bind-Value="cliente.Telefono"></InputText>
+						<label>(Sin guiones)</label>
+						<InputText id="telefono" class="form-control" @bind-Value="cliente.Telefono" placeholder="8092843161"></InputText>
 						<ValidationMessage For="@(() => cliente.Telefono)"></ValidationMessage>
 					</div>
 				</div>
