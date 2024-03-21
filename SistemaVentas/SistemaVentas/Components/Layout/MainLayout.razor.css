@@ -98,3 +98,41 @@ main {
 .miMensaje {
     margin-top: 15px;
 }
+
+
+.fondo {
+    /*background-color: turquoise;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    height: 100vh;*/ /* Establece la altura al 100% de la altura de la pantalla */
+    /*width: 100vw;*/
+    /* background-color: turquoise;
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: auto;
+    border-bottom: 20px;*/
+    /*background-color: turquoise;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow-y: auto;
+    margin-bottom: 20px;*/
+
+
+    background-color: turquoise;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: auto;
+    border-bottom: 20px solid turquoise;
+}

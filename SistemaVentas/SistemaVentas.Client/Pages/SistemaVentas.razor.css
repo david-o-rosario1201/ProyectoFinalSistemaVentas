@@ -1,5 +1,5 @@
 ﻿.miMensaje {
-    margin: 10px 12px 0 12px;
+    margin: 10px 24px 0 24px;
     text-align: center;
     color: white;
     background-color: black;
@@ -9,6 +9,9 @@
 
 .contenedor {
     border-radius: 0 0 5px 5px;
+    margin-left: 12px;
+    margin-right: 12px;
+    margin-bottom: 10px;
 }
 
 .miTabla {
@@ -23,10 +26,11 @@
     background-color: cornflowerblue;
     border-radius: 5px;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 35px;
     padding-top: 20px;
     padding-bottom: 20px;
-    position: relative; 
+    position: relative;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .borde{
