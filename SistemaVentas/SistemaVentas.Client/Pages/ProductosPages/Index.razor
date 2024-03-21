@@ -8,7 +8,12 @@
 		@*Header*@
 		<div class="card-header">
 			<h3><strong>Productos</strong></h3>
-			<button type="button" class="btn btn-outline-primary" @onclick="IrACrear"><i class="bi bi-plus-circle" /> Crear</button>
+			<div class="d-flex align-items-start">
+				<div class="px-2">
+					<button type="button" class="btn btn-outline-secondary" @onclick="Volver"><i class="bi bi-box-arrow-left" /> Volver</button>
+				</div>
+				<button type="button" class="btn btn-outline-primary" @onclick="IrACrear"><i class="bi bi-plus-circle" /> Crear</button>
+			</div>
 		</div>
 		@*Body*@
 		<div class="card-body">
@@ -247,6 +252,11 @@
 	{
 		await Task.Delay(2000);
 		mensaje = string.Empty;
+	}
+
+	void Volver()
+	{
+		navigation.NavigateTo("/");
 	}
 
 	void IrACrear()
