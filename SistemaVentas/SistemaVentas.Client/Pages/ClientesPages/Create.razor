@@ -1,7 +1,9 @@
 ﻿@page "/CreateClientes"
+@using global::SistemaVentas.Models.Models
 @* @inject HttpClient httpClient *@
 @rendermode InteractiveAuto
 @inject NavigationManager navigation
+@inject HttpClient clienteService
 
 <PageTitle>Crear Nuevo Cliente</PageTitle>
 <EditForm Model="cliente" OnValidSubmit="Crear" FormName="RegistroClientes">
@@ -114,6 +116,8 @@
 		// 		mensaje = "No se guardo el ticket";
 		// 	}
 		// }
+
+		await clienteService.PostAsJsonAsync("api/Clientes",cliente);
 
 		mensaje = "Se creo";
 	}
