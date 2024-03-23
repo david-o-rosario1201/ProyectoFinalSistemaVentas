@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Library.Models;
+namespace SistemaVentas.Models.Models;
 
 public class VentasDetalle
 {
