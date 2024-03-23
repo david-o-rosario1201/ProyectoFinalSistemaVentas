@@ -8,7 +8,7 @@
     <div class="d-flex justify-content-center">
         <img src="/Imagenes/vendedor.png" style="width: 200px; height: auto; margin-right: 10px;" />
     </div>
-    <h1 class="miMensaje"><strong>Sistema de Ventas</strong></h1>
+    <h1 class="miMensaje"><strong>Men&uacute; Principal</strong></h1>
 
     <div class="container">
         <div class="card shadow-lg contenedor">
@@ -82,7 +82,7 @@
                     </div>
                     @*Vacio*@
                     <div class="col-md-3 text-center">
-                        <button type="button" class="d-block mx-auto borde" @onclick="IrAAcercaDe">
+                        <button type="button" class="d-block mx-auto borde" @onclick="Anyways">
                             <h6><strong>Vacio</strong></h6>
                             <img src="Imagenes/advertencia.png" class="icon" style="width: 150px; height: auto; margin-right: 10px;" />
                         </button>
@@ -115,5 +115,9 @@
     private void IrAAcercaDe()
     {
         navigation.NavigateTo("/AcercaDe");
+    }
+    private void Anyways()
+    {
+        navigation.NavigateTo("/Probar");
     }
 }
