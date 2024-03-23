@@ -1,7 +1,7 @@
-﻿using Library.Models;
+﻿using SistemaVentas.Models.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace SistemaVentas.DAL;
+namespace SistemaVentas.Context.DAL;
 
 public class Contexto : DbContext
 {
