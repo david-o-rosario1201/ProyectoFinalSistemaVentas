@@ -1,6 +1,9 @@
 ﻿@page "/Clientes"
+@using global::SistemaVentas.Models.Models
+@using global::SistemaVentas.Services.Services
 @rendermode InteractiveAuto
 @inject NavigationManager navigation
+@inject ClientesService clienteService
 
 <PageTitle>Clientes</PageTitle>
 <div class="container">
@@ -127,6 +130,7 @@
 		await Task.Delay(500);
 
 		//proveedores = await httpClient.GetFromJsonAsync<List<Proveedores>>("api/Tickets");
+		clientes = await clienteService.GetClientes();
 
 		loading = false;
 

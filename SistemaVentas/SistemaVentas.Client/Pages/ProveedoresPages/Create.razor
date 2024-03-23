@@ -1,7 +1,10 @@
 ﻿@page "/CreateProveedores"
+@using global::SistemaVentas.Models.Models
+@using global::SistemaVentas.Services.Services
 @* @inject HttpClient httpClient *@
 @rendermode InteractiveAuto
 @inject NavigationManager navigation
+@* @inject ProveedoresService proveedorService *@
 
 <PageTitle>Crear Nuevo Proveedor</PageTitle>
 <EditForm Model="proveedor" OnValidSubmit="Crear" FormName="RegistroProveedores">
@@ -24,7 +27,7 @@
 						@*FechaCreacion*@
 						<label class="form-label" for="fecha"><strong>Fecha Creaci&oacute;n:</strong></label>
 						<InputDate id="fecha" class="form-control" @bind-Value="proveedor.FechaCreacion" readonly></InputDate>
-						<ValidationMessage For="@(() => proveedor.FechaCreacion)"></ValidationMessage>
+						@* <ValidationMessage For="@(() => proveedor.FechaCreacion)"></ValidationMessage> *@
 					</div>
 					<div class="col-4">
 						@*Nombre*@
@@ -46,8 +49,8 @@
 						<InputText id="email" class="form-control" @bind-Value="proveedor.Email" placeholder="Ej: juanperez123@gmail.com"></InputText>
 						<ValidationMessage For="@(() => proveedor.Email)"></ValidationMessage>
 					</div>
-					<div class="col-4">
-						@*TipoContribuyente*@
+					@* <div class="col-4">
+						@*TipoContribuyente
 						<label class="form-label" for="ipoContribuyente"><strong>Tipo de Contribuyente:</strong></label>
 						<InputSelect id="tipoContribuyente" class="form-select" @bind-Value="proveedor.TipoContribuyente">
 							<option value="0">Elija una opci&oacute;n</option>
@@ -57,7 +60,7 @@
 							}
 						</InputSelect>
 						<ValidationMessage For="@(() => proveedor.TipoContribuyente)"></ValidationMessage>
-					</div>
+					</div> *@
 				</div>
 				<div class="row mb-3">
 					<div class="col-4">
@@ -72,7 +75,6 @@
 						<label class="form-label" for="nota"><strong>Nota:</strong></label>
 						<label>(Opcional)</label>
 						<InputTextArea id="nota" class="form-control" @bind-Value="proveedor.Nota" placeholder="Ingrese una nota"></InputTextArea>
-						<ValidationMessage For="@(() => proveedor.Nota)"></ValidationMessage>
 					</div>
 				</div>
 				@*ProveedoresDetalles*@
@@ -144,14 +146,18 @@
 	</div>
 </EditForm>
 @mensaje
+@otro
 
 @code {
+
+	// public ProveedoresService proveedorService { get; set; }
 	public Proveedores proveedor { get; set; } = new Proveedores();
 	public List<TiposContribuyente> tiposContribuyente = new List<TiposContribuyente>();
 	public List<Contactos> contactos = new List<Contactos>();
 	public int tipo { get; set; }
 	public string contacto { get; set; } = string.Empty;
 	public string mensaje { get; set; } = string.Empty;
+	public string otro { get; set; } = string.Empty;
 	// public List<Clientes> clientes = new List<Clientes>();
 	// public List<Sistemas> sistemas = new List<Sistemas>();
 	// public List<Prioridades> prioridades = new List<Prioridades>();
@@ -169,7 +175,7 @@
 		// prioridades = await httpClient.GetFromJsonAsync<List<Prioridades>>("api/Prioridades");
 	}
 
-	public async Task Crear()
+	public void Crear()
 	{
 		// if (!await ValidarTicket())
 		// {
@@ -191,6 +197,10 @@
 		// 	}
 		// }
 
+		Console.WriteLine("Entró a la función Crear");
+		otro = "Entro a crear";
+		StateHasChanged();
+		// proveedorService.Save(proveedor);
 		mensaje = "Se creo";
 	}
 
