@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using SistemaVentas.Components;
-using SistemaVentas.DAL;
+using SistemaVentas.Context.DAL;
+using SistemaVentas.Services;
+using SistemaVentas.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,8 +11,26 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 builder.Services.AddDbContextFactory<Contexto>
     (o => o.UseSqlite(builder.Configuration.GetConnectionString("ConStr")));
+
+builder.Services.AddScoped<ClientesService>();
+builder.Services.AddScoped<ProveedoresService>();
+
+builder.Services.AddScoped(c =>
+    new HttpClient
+    {
+        BaseAddress = new Uri(builder.Configuration["RutaApi"] ?? "https://localhost:7150")
+    }
+);
+
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<SistemaVentas.Services.Services.ProveedoresService>();
+builder.Services.AddScoped<SistemaVentas.Services.Services.ClientesService>();
 
 var app = builder.Build();
 
@@ -18,6 +38,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseWebAssemblyDebugging();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 else
 {
@@ -36,4 +58,5 @@ app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(SistemaVentas.Client._Imports).Assembly);
 
+app.MapControllers();
 app.Run();
