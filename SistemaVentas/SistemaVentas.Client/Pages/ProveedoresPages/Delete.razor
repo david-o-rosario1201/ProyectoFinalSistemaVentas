@@ -1,9 +1,13 @@
 ﻿@page "/DeleteProveedores"
 @page "/DeleteProveedores/proveedorId={proveedorId:int}"
 @using global::SistemaVentas.Models.Models
+@using global::SistemaVentas.Services.Services
 @* @inject HttpClient httpClient *@
 @rendermode InteractiveAuto
 @inject NavigationManager navigation
+@inject ProveedoresService proveedorService
+@inject TiposContribuyenteService tipoContribuyenteService
+@inject ContactosService contactoService
 
 <PageTitle>Eliminar Proveedor</PageTitle>
 <div class="container">
@@ -18,7 +22,7 @@
 			@*Datos*@
 			<ul>
 				<li><strong>ProveedorId:</strong> @proveedor.ProveedorId</li>
-				<li><strong>FechaCreacion:</strong> @proveedor.FechaCreacion</li>
+				<li><strong>FechaCreacion:</strong> @proveedor.FechaCreacion.ToShortDateString()</li>
 				<li><strong>Nombre:</strong> @proveedor.Nombre</li>
 				<li><strong>Direcci&oacute;n:</strong> @proveedor.Direccion</li>
 				<li><strong>Email:</strong> @proveedor.Email</li>
@@ -90,6 +94,10 @@
 	protected override async Task OnInitializedAsync()
 	{
 		await Task.Delay(500);
+
+		tiposContribuyente = await tipoContribuyenteService.GetTiposContribuyentes();
+		contactos = await contactoService.GetContactos();
+		proveedor = await proveedorService.GetProveedor(proveedorId);
 
 		// clientes = await httpClient.GetFromJsonAsync<List<Clientes>>("api/Clientes");
 		// sistemas = await httpClient.GetFromJsonAsync<List<Sistemas>>("api/Sistemas");

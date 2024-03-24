@@ -4,7 +4,9 @@
 @* @inject HttpClient httpClient *@
 @rendermode InteractiveAuto
 @inject NavigationManager navigation
-@* @inject ProveedoresService proveedorService *@
+@inject ProveedoresService proveedorService
+@inject TiposContribuyenteService tipoContribuyenteService
+@inject ContactosService contactoService
 
 <PageTitle>Crear Nuevo Proveedor</PageTitle>
 <EditForm Model="proveedor" OnValidSubmit="Crear" FormName="RegistroProveedores">
@@ -49,8 +51,8 @@
 						<InputText id="email" class="form-control" @bind-Value="proveedor.Email" placeholder="Ej: juanperez123@gmail.com"></InputText>
 						<ValidationMessage For="@(() => proveedor.Email)"></ValidationMessage>
 					</div>
-					@* <div class="col-4">
-						@*TipoContribuyente
+					<div class="col-4">
+						@*TipoContribuyente*@
 						<label class="form-label" for="ipoContribuyente"><strong>Tipo de Contribuyente:</strong></label>
 						<InputSelect id="tipoContribuyente" class="form-select" @bind-Value="proveedor.TipoContribuyente">
 							<option value="0">Elija una opci&oacute;n</option>
@@ -60,7 +62,7 @@
 							}
 						</InputSelect>
 						<ValidationMessage For="@(() => proveedor.TipoContribuyente)"></ValidationMessage>
-					</div> *@
+					</div>
 				</div>
 				<div class="row mb-3">
 					<div class="col-4">
@@ -75,6 +77,7 @@
 						<label class="form-label" for="nota"><strong>Nota:</strong></label>
 						<label>(Opcional)</label>
 						<InputTextArea id="nota" class="form-control" @bind-Value="proveedor.Nota" placeholder="Ingrese una nota"></InputTextArea>
+						<ValidationMessage For="@(() => proveedor.Nota)"></ValidationMessage>
 					</div>
 				</div>
 				@*ProveedoresDetalles*@
@@ -152,6 +155,7 @@
 
 	// public ProveedoresService proveedorService { get; set; }
 	public Proveedores proveedor { get; set; } = new Proveedores();
+
 	public List<TiposContribuyente> tiposContribuyente = new List<TiposContribuyente>();
 	public List<Contactos> contactos = new List<Contactos>();
 	public int tipo { get; set; }
@@ -170,12 +174,16 @@
 	{
 		await Task.Delay(500);
 
+		tiposContribuyente = await tipoContribuyenteService.GetTiposContribuyentes();
+		contactos = await contactoService.GetContactos();
+		mensaje = "";
+
 		// clientes = await httpClient.GetFromJsonAsync<List<Clientes>>("api/Clientes");
 		// sistemas = await httpClient.GetFromJsonAsync<List<Sistemas>>("api/Sistemas");
 		// prioridades = await httpClient.GetFromJsonAsync<List<Prioridades>>("api/Prioridades");
 	}
 
-	public void Crear()
+	public async void Crear()
 	{
 		// if (!await ValidarTicket())
 		// {
@@ -197,11 +205,27 @@
 		// 	}
 		// }
 
-		Console.WriteLine("Entró a la función Crear");
 		otro = "Entro a crear";
+
+		if (String.IsNullOrEmpty(proveedor.Nota))
+			proveedor.Nota = "----";
+
+		var response = await proveedorService.Save(proveedor);
+
+		if (response.IsSuccessStatusCode)
+		{
+			mensaje = "La solicitud fue exitosa.";
+		}
+		else
+		{
+			mensaje = "La solicitud falló con el siguiente estado: " + response.ToString();
+		}
+
+		Console.WriteLine("Entró a la función Crear");
+		
 		StateHasChanged();
 		// proveedorService.Save(proveedor);
-		mensaje = "Se creo";
+		
 	}
 
 	public async Task AgregarDetalle()
