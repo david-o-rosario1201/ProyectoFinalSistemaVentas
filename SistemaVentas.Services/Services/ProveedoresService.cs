@@ -32,7 +32,7 @@ public class ProveedoresService
 
     public async Task<HttpResponseMessage> Update(Proveedores proveedor)
     {
-        return await _httpClient.PutAsJsonAsync($"api/Proveedores/", proveedor);
+        return await _httpClient.PutAsJsonAsync($"api/Proveedores", proveedor);
     }
 
     public async Task<HttpResponseMessage> Delete(int id)
