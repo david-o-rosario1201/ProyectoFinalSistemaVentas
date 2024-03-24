@@ -41,7 +41,13 @@ namespace SistemaVentas.Controllers
         [HttpPost]
         public async Task<ActionResult<Clientes>> PostClientes(Clientes cliente)
         {
-            var clienteSaved = clienteService.Save(cliente);
+            var clienteSaved = await clienteService.Save(cliente);
+
+            if(clienteSaved == null)
+            {
+                return NotFound();
+            }
+
             return Ok(clienteSaved);
         }
 

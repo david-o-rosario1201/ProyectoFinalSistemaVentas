@@ -17,43 +17,61 @@ namespace SistemaVentas.Controllers
     {
         // GET: api/Proveedores
         [HttpGet]
-        public async Task<ActionResult<List<Proveedores>>> GetProveedores()
+        public async Task<ActionResult<IEnumerable<Proveedores>>> GetProveedores()
         {
-            var proveedores = proveedorService.GetProveedores();
+            var proveedores = await proveedorService.GetProveedores();
+
+            if (proveedores == null)
+            {
+                return NotFound();
+            }
+
             return Ok(proveedores);
         }
 
         // GET: api/Proveedores/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Proveedores>> GetProveedor(short id)
+        public async Task<ActionResult<Proveedores>> GetProveedor(int id)
         {
-            var proveedor = proveedorService.GetProveedor(id);
+            var proveedor = await proveedorService.GetProveedor(id);
+
+            if(proveedor == null)
+            {
+                return NotFound();
+            }
+
             return Ok(proveedor);
         }
 
-        // POST: api/Proveedores
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Proveedores>> PostProveedores(Proveedores proveedor)
-        {
-            var proveedorSaved = proveedorService.Save(proveedor);
-            return Ok(proveedorSaved);
-        }
+		// POST: api/Proveedores
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPost]
+		public async Task<ActionResult<Proveedores>> PostClientes(Proveedores proveedor)
+		{
+			var clienteSaved = await proveedorService.Save(proveedor);
 
-        // PUT: api/Proveedores/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+			if (clienteSaved == null)
+			{
+				return NotFound();
+			}
+
+			return Ok(clienteSaved);
+		}
+
+		// PUT: api/Proveedores/5
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPut("{id}")]
         public async Task<IActionResult> PutProveedores(Proveedores proveedor)
         {
-            var proveedorUpdated = proveedorService.Update(proveedor);
+            var proveedorUpdated = await proveedorService.Update(proveedor);
             return Ok(proveedorUpdated);
         }
 
-        // DELETE: api/Proveedores/5
+        //DELETE: api/Proveedores/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProveedores(short id)
         {
-            var proveedorDeleted = proveedorService.Delete(id);
+            var proveedorDeleted = await proveedorService.Delete(id);
             return Ok(proveedorDeleted);
         }
     }
