@@ -20,6 +20,8 @@ builder.Services.AddDbContextFactory<Contexto>
 
 builder.Services.AddScoped<ClientesService>();
 builder.Services.AddScoped<ProveedoresService>();
+builder.Services.AddScoped<TiposContribuyenteService>();
+builder.Services.AddScoped<ContactosService>();
 
 //builder.Services.AddScoped(c =>
 //    new HttpClient
@@ -38,6 +40,8 @@ builder.Services.AddScoped(c =>
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<SistemaVentas.Services.Services.ProveedoresService>();
 builder.Services.AddScoped<SistemaVentas.Services.Services.ClientesService>();
+builder.Services.AddScoped<SistemaVentas.Services.Services.TiposContribuyenteService>();
+builder.Services.AddScoped<SistemaVentas.Services.Services.ContactosService>();
 
 var app = builder.Build();
 
