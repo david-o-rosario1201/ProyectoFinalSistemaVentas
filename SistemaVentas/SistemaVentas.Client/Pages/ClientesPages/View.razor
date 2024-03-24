@@ -1,9 +1,11 @@
 ﻿@page "/ViewClientes"
-@page "/ViewClientes/clienteId={clientId:int}"
+@page "/ViewClientes/clienteId={clienteId:int}"
 @using global::SistemaVentas.Models.Models
+@using global::SistemaVentas.Services.Services
 @* @inject HttpClient httpClient *@
 @rendermode InteractiveAuto
 @inject NavigationManager navigation
+@inject ClientesService clienteService
 
 <PageTitle>Detalles de Cliente</PageTitle>
 <div class="container">
@@ -34,7 +36,7 @@
 
 @code {
 	[Parameter]
-	public int clientId { get; set; }
+	public int clienteId { get; set; }
 
 	public Clientes cliente { get; set; } = new Clientes();
 	public List<TiposContribuyente> tiposContribuyente = new List<TiposContribuyente>();
@@ -53,6 +55,9 @@
 	protected override async Task OnInitializedAsync()
 	{
 		await Task.Delay(500);
+
+		cliente = await clienteService.GetCliente(clienteId);
+		mensaje = "";
 
 		// clientes = await httpClient.GetFromJsonAsync<List<Clientes>>("api/Clientes");
 		// sistemas = await httpClient.GetFromJsonAsync<List<Sistemas>>("api/Sistemas");

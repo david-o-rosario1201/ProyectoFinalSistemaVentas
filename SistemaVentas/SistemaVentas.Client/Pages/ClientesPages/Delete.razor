@@ -1,9 +1,11 @@
 ﻿@page "/DeleteClientes"
-@page "/DeleteClientes/clienteId={clientId:int}"
+@page "/DeleteClientes/clienteId={clienteId:int}"
 @using global::SistemaVentas.Models.Models
+@using global::SistemaVentas.Services.Services
 @* @inject HttpClient httpClient *@
 @rendermode InteractiveAuto
 @inject NavigationManager navigation
+@inject ClientesService clienteService
 
 <PageTitle>Eliminar Cliente</PageTitle>
 <div class="container">
@@ -30,7 +32,7 @@
 			<div class="px-2">
 				<button type="button" class="btn btn-outline-dark" @onclick="Volver"><i class="bi bi-box-arrow-left" /> Cancelar</button>
 			</div>
-			<button type="button" class="btn btn-outline-danger"><i class="bi bi-trash3-fill" /> Eliminar</button>
+			<button type="button" class="btn btn-outline-danger" @onclick="Eliminar"><i class="bi bi-trash3-fill" /> Eliminar</button>
 		</div>
 	</div>
 </div>
@@ -38,7 +40,7 @@
 
 @code {
 	[Parameter]
-	public int clientId { get; set; }
+	public int clienteId { get; set; }
 
 	public Clientes cliente { get; set; } = new Clientes();
 	public List<TiposContribuyente> tiposContribuyente = new List<TiposContribuyente>();
@@ -58,6 +60,7 @@
 	{
 		await Task.Delay(500);
 
+		cliente = await clienteService.GetCliente(clienteId);
 		// clientes = await httpClient.GetFromJsonAsync<List<Clientes>>("api/Clientes");
 		// sistemas = await httpClient.GetFromJsonAsync<List<Sistemas>>("api/Sistemas");
 		// prioridades = await httpClient.GetFromJsonAsync<List<Prioridades>>("api/Prioridades");
@@ -85,6 +88,8 @@
 		// 	}
 		// }
 
+
+		await clienteService.Delete(clienteId);
 		mensaje = "Se creo";
 	}
 
