@@ -21,11 +21,18 @@ builder.Services.AddDbContextFactory<Contexto>
 builder.Services.AddScoped<ClientesService>();
 builder.Services.AddScoped<ProveedoresService>();
 
+//builder.Services.AddScoped(c =>
+//    new HttpClient
+//    {
+//        BaseAddress = new Uri(builder.Configuration["RutaApi"] ?? "https://localhost:7150")
+//    }
+//);
+
 builder.Services.AddScoped(c =>
-    new HttpClient
-    {
-        BaseAddress = new Uri(builder.Configuration["RutaApi"] ?? "https://localhost:7150")
-    }
+	new HttpClient
+	{
+		BaseAddress = new Uri(builder.Configuration.GetSection("BaseUri").Value)
+	}
 );
 
 builder.Services.AddHttpClient();
