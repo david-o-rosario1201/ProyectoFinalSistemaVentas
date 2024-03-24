@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Library\SistemaVentas.Models.csproj" />
-    <ProjectReference Include="..\SistemaVentas.Context\SistemaVentas.Context.csproj" />
   </ItemGroup>
 
 </Project>
