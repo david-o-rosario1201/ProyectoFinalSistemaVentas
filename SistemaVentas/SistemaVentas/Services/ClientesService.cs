@@ -15,11 +15,11 @@ public class ClientesService(Contexto contexto)
         //}).ToListAsync();
     }
 
-    public async Task<Clientes> GetCliente(short id)
+    public async Task<Clientes> GetCliente(int id)
     {
-        return await contexto.Clientes.AsNoTracking()
-                                    .FirstOrDefaultAsync(c => c.ClienteId == id);
-    }
+		var cliente = await contexto.Clientes.FirstOrDefaultAsync(c => c.ClienteId == id);
+        return cliente;
+	}
 
     public async Task<Clientes> Save(Clientes cliente)
     {
@@ -35,13 +35,13 @@ public class ClientesService(Contexto contexto)
         return cliente;
     }
 
-    public async Task<int> Delete(short id)
+    public async Task Delete(int id)
     {
-        var eliminado = await contexto.Clientes
-            .Where(c => c.ClienteId == id)
-            .ExecuteDeleteAsync();
-
-        await contexto.SaveChangesAsync();
-        return eliminado;
-    }
+		var cliente = await contexto.Clientes.FindAsync(id);
+		if (cliente != null)
+		{
+			contexto.Clientes.Remove(cliente);
+			await contexto.SaveChangesAsync();
+		}
+	}
 }
