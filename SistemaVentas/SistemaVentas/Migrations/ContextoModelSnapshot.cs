@@ -17,7 +17,7 @@ namespace SistemaVentas.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
 
-            modelBuilder.Entity("Library.Models.Categorias", b =>
+            modelBuilder.Entity("SistemaVentas.Models.Models.Categorias", b =>
                 {
                     b.Property<int>("CategoriaId")
                         .ValueGeneratedOnAdd()
@@ -84,7 +84,7 @@ namespace SistemaVentas.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Library.Models.Clientes", b =>
+            modelBuilder.Entity("SistemaVentas.Models.Models.Clientes", b =>
                 {
                     b.Property<int>("ClienteId")
                         .ValueGeneratedOnAdd()
@@ -117,7 +117,7 @@ namespace SistemaVentas.Migrations
                     b.ToTable("Clientes");
                 });
 
-            modelBuilder.Entity("Library.Models.Contactos", b =>
+            modelBuilder.Entity("SistemaVentas.Models.Models.Contactos", b =>
                 {
                     b.Property<int>("ContactoId")
                         .ValueGeneratedOnAdd()
@@ -144,7 +144,7 @@ namespace SistemaVentas.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Library.Models.ProductoDetalle", b =>
+            modelBuilder.Entity("SistemaVentas.Models.Models.ProductoDetalle", b =>
                 {
                     b.Property<int>("ProductoDetalleId")
                         .ValueGeneratedOnAdd()
@@ -169,7 +169,7 @@ namespace SistemaVentas.Migrations
                     b.ToTable("ProductoDetalle");
                 });
 
-            modelBuilder.Entity("Library.Models.Productos", b =>
+            modelBuilder.Entity("SistemaVentas.Models.Models.Productos", b =>
                 {
                     b.Property<int>("ProductoId")
                         .ValueGeneratedOnAdd()
@@ -213,7 +213,7 @@ namespace SistemaVentas.Migrations
                     b.ToTable("Productos");
                 });
 
-            modelBuilder.Entity("Library.Models.Proveedores", b =>
+            modelBuilder.Entity("SistemaVentas.Models.Models.Proveedores", b =>
                 {
                     b.Property<int>("ProveedorId")
                         .ValueGeneratedOnAdd()
@@ -254,7 +254,7 @@ namespace SistemaVentas.Migrations
                     b.ToTable("Proveedores");
                 });
 
-            modelBuilder.Entity("Library.Models.ProveedoresDetalle", b =>
+            modelBuilder.Entity("SistemaVentas.Models.Models.ProveedoresDetalle", b =>
                 {
                     b.Property<int>("DetalleId")
                         .ValueGeneratedOnAdd()
@@ -277,7 +277,7 @@ namespace SistemaVentas.Migrations
                     b.ToTable("ProveedoresDetalle");
                 });
 
-            modelBuilder.Entity("Library.Models.TiposContribuyente", b =>
+            modelBuilder.Entity("SistemaVentas.Models.Models.TiposContribuyente", b =>
                 {
                     b.Property<int>("TipoContribuyenteId")
                         .ValueGeneratedOnAdd()
@@ -304,7 +304,7 @@ namespace SistemaVentas.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Library.Models.Ventas", b =>
+            modelBuilder.Entity("SistemaVentas.Models.Models.Ventas", b =>
                 {
                     b.Property<int>("VentaId")
                         .ValueGeneratedOnAdd()
@@ -330,7 +330,7 @@ namespace SistemaVentas.Migrations
                     b.ToTable("Ventas");
                 });
 
-            modelBuilder.Entity("Library.Models.VentasDetalle", b =>
+            modelBuilder.Entity("SistemaVentas.Models.Models.VentasDetalle", b =>
                 {
                     b.Property<int>("VentaDetalleId")
                         .ValueGeneratedOnAdd()
@@ -355,56 +355,56 @@ namespace SistemaVentas.Migrations
                     b.ToTable("VentasDetalle");
                 });
 
-            modelBuilder.Entity("Library.Models.ProductoDetalle", b =>
+            modelBuilder.Entity("SistemaVentas.Models.Models.ProductoDetalle", b =>
                 {
-                    b.HasOne("Library.Models.Productos", null)
+                    b.HasOne("SistemaVentas.Models.Models.Productos", null)
                         .WithMany("ProductoDetalle")
                         .HasForeignKey("ProductoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Library.Models.Productos", b =>
+            modelBuilder.Entity("SistemaVentas.Models.Models.Productos", b =>
                 {
-                    b.HasOne("Library.Models.Categorias", null)
+                    b.HasOne("SistemaVentas.Models.Models.Categorias", null)
                         .WithMany("Productos")
                         .HasForeignKey("CategoriaId");
                 });
 
-            modelBuilder.Entity("Library.Models.ProveedoresDetalle", b =>
+            modelBuilder.Entity("SistemaVentas.Models.Models.ProveedoresDetalle", b =>
                 {
-                    b.HasOne("Library.Models.Proveedores", null)
+                    b.HasOne("SistemaVentas.Models.Models.Proveedores", null)
                         .WithMany("ProveedoresDetalle")
                         .HasForeignKey("ProveedorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Library.Models.VentasDetalle", b =>
+            modelBuilder.Entity("SistemaVentas.Models.Models.VentasDetalle", b =>
                 {
-                    b.HasOne("Library.Models.Ventas", null)
+                    b.HasOne("SistemaVentas.Models.Models.Ventas", null)
                         .WithMany("VentaDetalle")
                         .HasForeignKey("VentaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Library.Models.Categorias", b =>
+            modelBuilder.Entity("SistemaVentas.Models.Models.Categorias", b =>
                 {
                     b.Navigation("Productos");
                 });
 
-            modelBuilder.Entity("Library.Models.Productos", b =>
+            modelBuilder.Entity("SistemaVentas.Models.Models.Productos", b =>
                 {
                     b.Navigation("ProductoDetalle");
                 });
 
-            modelBuilder.Entity("Library.Models.Proveedores", b =>
+            modelBuilder.Entity("SistemaVentas.Models.Models.Proveedores", b =>
                 {
                     b.Navigation("ProveedoresDetalle");
                 });
 
-            modelBuilder.Entity("Library.Models.Ventas", b =>
+            modelBuilder.Entity("SistemaVentas.Models.Models.Ventas", b =>
                 {
                     b.Navigation("VentaDetalle");
                 });

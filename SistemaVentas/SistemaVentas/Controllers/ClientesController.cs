@@ -26,36 +26,53 @@ namespace SistemaVentas.Controllers
 
         // GET: api/Clientes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Clientes>> GetCliente(short id)
+        public async Task<ActionResult<Clientes>> GetCliente(int id)
         {
-            var cliente = clienteService.GetCliente(id);
-            return Ok(cliente);
-        }
+			var cliente = await clienteService.GetCliente(id);
+			if (cliente == null)
+			{
+				return NotFound();
+			}
+			return Ok(cliente);
+		}
 
         // POST: api/Clientes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Clientes>> PostClientes(Clientes cliente)
         {
-            var clienteSaved = clienteService.Save(cliente);
+            var clienteSaved = await clienteService.Save(cliente);
+
+            if(clienteSaved == null)
+            {
+                return NotFound();
+            }
+
             return Ok(clienteSaved);
         }
 
         // PUT: api/Clientes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> PutClientes(Clientes cliente)
         {
             var clienteUpdated = clienteService.Update(cliente);
+            
+            if(clienteUpdated == null)
+            {
+                return NotFound();
+            }
+
             return Ok(clienteUpdated);
         }
 
         // DELETE: api/Clientes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteClientes(short id)
+        public async Task<IActionResult> DeleteClientes(int id)
         {
-            var clienteDeleted = clienteService.Delete(id);
-            return Ok(clienteDeleted);
-        }
+			await clienteService.Delete(id); // Esperar la eliminación del cliente
+
+			return NoContent();
+		}
     }
 }

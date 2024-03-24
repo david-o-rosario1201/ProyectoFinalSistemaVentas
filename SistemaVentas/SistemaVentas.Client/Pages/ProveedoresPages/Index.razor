@@ -84,7 +84,6 @@
 							<th>Email</th>
 							<th>RNC</th>
 							<th>Tipo de Contribuyente</th>
-							<th>Nota</th>
 							<th>Ver</th>
 							<th>Editar</th>
 							<th>Eliminar</th>
@@ -101,7 +100,6 @@
 								<td>@proveedor.Email</td>
 								<td>@proveedor.RNC</td>
 								<td>@proveedor.TipoContribuyente</td>
-								<td>@proveedor.Nota</td>
 								<td><button type="button" class="btn btn-outline-info" @onclick="()=> IrADetalles(proveedor.ProveedorId)"><i class="bi bi-eye" /></button></td>
 								<td><button type="button" class="btn btn-outline-warning" @onclick="()=> IrAEditar(proveedor.ProveedorId)"><i class="bi bi-pencil-square" /></button></td>
 								<td><button type="button" class="btn btn-outline-danger" @onclick="()=> IrAEliminar(proveedor.ProveedorId)"><i class="bi bi-trash3-fill" /></button></td>
@@ -135,6 +133,7 @@
 
 		//proveedores = await httpClient.GetFromJsonAsync<List<Proveedores>>("api/Tickets");
 		proveedores = await proveedorService.GetProveedores();
+		mensaje = "";
 
 		loading = false;
 

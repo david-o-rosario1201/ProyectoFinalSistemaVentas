@@ -7,21 +7,18 @@ namespace SistemaVentas.Services;
 
 public class ProveedoresService(Contexto contexto)
 {
-    public async Task<List<Proveedores>> GetProveedores()
+    public async Task<IEnumerable<Proveedores>> GetProveedores()
     {
-        return await contexto.Proveedores.
-            Include(p => p.ProveedoresDetalle).ToListAsync();
-		//Select(p => new Proveedores()
-		//{
+		var proveedores = await contexto.Proveedores
+	   .Include(p => p.ProveedoresDetalle)
+	   .ToListAsync();
 
-		//}).ToListAsync();
+		return proveedores;
 	}
 
-    public async Task<Proveedores> GetProveedor(short id)
+    public async Task<Proveedores> GetProveedor(int id)
     {
-        return await contexto.Proveedores.AsNoTracking()
-            .Include(d => d.ProveedoresDetalle)
-            .FirstOrDefaultAsync(p => p.ProveedorId == id);
+		return await contexto.Proveedores.FirstOrDefaultAsync(p => p.ProveedorId == id);
     }
 
     public async Task<Proveedores> Save(Proveedores proveedor)
