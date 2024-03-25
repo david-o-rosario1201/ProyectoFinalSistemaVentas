@@ -44,4 +44,9 @@ public class ProveedoresService
 	{
 		return await _httpClient.DeleteAsync($"api/Proveedores/{id}");
 	}
+
+	public async Task<HttpResponseMessage> DeleteDetalle(int proveedorId, int detalleId)
+	{
+		return await _httpClient.DeleteAsync($"api/Proveedores/{proveedorId}/Detalle/{detalleId}");
+	}
 }
