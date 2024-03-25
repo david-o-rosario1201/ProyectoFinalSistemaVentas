@@ -18,48 +18,73 @@
 		</div>
 		@*Cuerpo*@
 		<div class="card-body">
-			@*Datos*@
-			<ul>
-				<li><strong>ProveedorId:</strong> @proveedor.ProveedorId</li>
-				<li><strong>FechaCreacion:</strong> @proveedor.FechaCreacion.ToShortDateString()</li>
-				<li><strong>Nombre:</strong> @proveedor.Nombre</li>
-				<li><strong>Direcci&oacute;n:</strong> @proveedor.Direccion</li>
-				<li><strong>Email:</strong> @proveedor.Email</li>
-				<li><strong>TipoContribuyente:</strong> @proveedor.TipoContribuyente</li>
-				<li><strong>RNC:</strong> @proveedor.RNC</li>
-				<li><strong>Nota:</strong> @proveedor.Nota</li>
-			</ul>
-
-			@*ProveedoresDetalles*@
-			<fieldset class="border-primmary border border-2">
-				@*Body*@
-				<div class="card-body">
-					<section>
-						@if (proveedor.ProveedoresDetalle.Count > 0)
-						{
-							@*Table Detalles*@
-							<table class="table table-bordered miTabla">
-								<thead>
-									<tr>
-										<th>Tipo de Contacto</th>
-										<th>Contacto</th>
-									</tr>
-								</thead>
-								<tbody>
-									@foreach (var detalle in proveedor.ProveedoresDetalle)
-									{
-										<tr>
-											<td></td>
-											<td>@detalle.Contacto</td>
-										</tr>
-									}
-								</tbody>
-							</table>
-							<p><strong>Total de Detalles: </strong>@proveedor.ProveedoresDetalle.Count</p>
-						}
-					</section>
+			<div class="row">
+				<div class="col-8">
+					<div class="col-md-11">
+						<h3 class="text-center"><strong>Datos del Proveedor</strong></h3>
+						<div class="border-primmary border border-2 borde">
+							<div class="card-body">
+								<div class="row">
+									<!-- Columna para la imagen -->
+									<div class="col-2">
+										<div class="text-center">
+											<img src="Imagenes/mensajero.png" alt="Imagen" class="img-fluid img-thumbnail" style="width: 100px; height: auto;">
+										</div>
+									</div>
+									<!-- Columna para los datos del proveedor -->
+									<div class="col-9">
+										<ul class="list-unstyled" style="margin-top: 20px; margin-bottom: 20px;">
+											<li><strong>ProveedorId:</strong> @proveedor.ProveedorId</li>
+											<li><strong>FechaCreacion:</strong> @proveedor.FechaCreacion.ToShortDateString()</li>
+											<li><strong>Nombre:</strong> @proveedor.Nombre</li>
+											<li><strong>Dirección:</strong> @proveedor.Direccion</li>
+											<li><strong>Email:</strong> @proveedor.Email</li>
+											<li><strong>TipoContribuyente:</strong> @proveedor.TipoContribuyente</li>
+											<li><strong>RNC:</strong> @proveedor.RNC</li>
+											<li><strong>Nota:</strong> @proveedor.Nota</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-			</fieldset>
+				<!-- Columna para el detalle del proveedor -->
+				<div class="col-4">
+					<h3 class="text-center"><strong>Contactos</strong></h3>
+					<fieldset class="border-primmary border border-2 borde">
+						<div class="card-body">
+							<section>
+								@if (proveedor.ProveedoresDetalle.Count > 0)
+								{
+									<table class="table table-bordered miTabla">
+										<thead>
+											<tr>
+												<th>Tipo de Contacto</th>
+												<th>Contacto</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach (var detalle in proveedor.ProveedoresDetalle)
+											{
+												<tr>
+													<td>@ObtenerTipoContacto(detalle.ContactoId)</td>
+													<td>@detalle.Contacto</td>
+												</tr>
+											}
+										</tbody>
+									</table>
+									<p><strong>Total de Detalles: </strong>@proveedor.ProveedoresDetalle.Count</p>
+								}
+								else
+								{
+									<h4>Este proveedor no tiene contactos agregados</h4>
+								}
+							</section>
+						</div>
+					</fieldset>
+				</div>
+			</div>
 		</div>
 		@*Footer*@
 		<div class="card-footer">
@@ -67,6 +92,7 @@
 		</div>
 	</div>
 </div>
+
 @mensaje
 
 @code {
@@ -195,6 +221,13 @@
 	public async Task EliminarDetalle(ProveedoresDetalle detalle)
 	{
 		proveedor.ProveedoresDetalle.Remove(detalle);
+	}
+
+	public string ObtenerTipoContacto(int id)
+	{
+		var dato = contactos.FirstOrDefault(c => c.ContactoId == id);
+
+		return dato.Descripcion;
 	}
 
 	public async Task LimpiarPantalla()
