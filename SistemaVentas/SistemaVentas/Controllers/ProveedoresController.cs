@@ -35,7 +35,7 @@ namespace SistemaVentas.Controllers
         {
             var proveedor = await proveedorService.GetProveedor(id);
 
-            if(proveedor == null)
+            if (proveedor == null)
             {
                 return NotFound();
             }
@@ -43,36 +43,50 @@ namespace SistemaVentas.Controllers
             return Ok(proveedor);
         }
 
-		// POST: api/Proveedores
-		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-		[HttpPost]
-		public async Task<ActionResult<Proveedores>> PostClientes(Proveedores proveedor)
-		{
-			var clienteSaved = await proveedorService.Save(proveedor);
+        // POST: api/Proveedores
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Proveedores>> PostClientes(Proveedores proveedor)
+        {
+            var clienteSaved = await proveedorService.Save(proveedor);
 
-			if (clienteSaved == null)
-			{
-				return NotFound();
-			}
+            if (clienteSaved == null)
+            {
+                return NotFound();
+            }
 
-			return Ok(clienteSaved);
-		}
+            return Ok(clienteSaved);
+        }
 
-		// PUT: api/Proveedores/5
-		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-		[HttpPut("{id}")]
+        // PUT: api/Proveedores/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut]
         public async Task<IActionResult> PutProveedores(Proveedores proveedor)
         {
             var proveedorUpdated = await proveedorService.Update(proveedor);
+
+            if (proveedorUpdated == null)
+            {
+                return NotFound();
+            }
+
             return Ok(proveedorUpdated);
         }
 
         //DELETE: api/Proveedores/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProveedores(short id)
+        public async Task<IActionResult> DeleteProveedores(int id)
         {
-            var proveedorDeleted = await proveedorService.Delete(id);
-            return Ok(proveedorDeleted);
+            await proveedorService.Delete(id);
+            return NoContent();
         }
+
+        //DELETE: api/Proveedores/5/Detalle/2
+        [HttpDelete("{proveedorId}/Detalle/{detalleId}")]
+        public async Task<IActionResult> DeleteProveedoresDetalle(int proveedorId, int detalleId)
+        {
+            await proveedorService.DeleteDetalle(proveedorId, detalleId);
+			return NoContent();
+		}
     }
 }
