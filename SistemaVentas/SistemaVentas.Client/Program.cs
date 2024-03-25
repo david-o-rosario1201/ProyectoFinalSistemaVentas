@@ -13,5 +13,6 @@ builder.Services.AddScoped<ClientesService>();
 builder.Services.AddScoped<ProveedoresService>();
 builder.Services.AddScoped<TiposContribuyenteService>();
 builder.Services.AddScoped<CategoriasService>();
+builder.Services.AddScoped<ContactosService>();
 
 await builder.Build().RunAsync();
