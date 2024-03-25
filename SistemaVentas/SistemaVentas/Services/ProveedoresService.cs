@@ -18,7 +18,8 @@ public class ProveedoresService(Contexto contexto)
 
     public async Task<Proveedores> GetProveedor(int id)
     {
-		return await contexto.Proveedores.FirstOrDefaultAsync(p => p.ProveedorId == id);
+		return await contexto.Proveedores
+            .Include(d => d.ProveedoresDetalle).FirstOrDefaultAsync(p => p.ProveedorId == id);
     }
 
     public async Task<Proveedores> Save(Proveedores proveedor)
@@ -35,12 +36,30 @@ public class ProveedoresService(Contexto contexto)
         return proveedor;
     }
 
-    public async Task<int> Delete(short id)
+    public async Task Delete(int id)
     {
-        var eliminado = await contexto.Proveedores
-            .Where(p => p.ProveedorId == id).ExecuteDeleteAsync();
+		var proveedor = await contexto.Proveedores.FindAsync(id);
+		if (proveedor != null)
+		{
+			contexto.Proveedores.Remove(proveedor);
+			await contexto.SaveChangesAsync();
+		}
+	}
 
-        await contexto.SaveChangesAsync();
-        return eliminado;
-    }
+	public async Task DeleteDetalle(int proveedorId, int detalleId)
+	{
+		var proveedor = await contexto.Proveedores
+			.Include(d => d.ProveedoresDetalle)
+			.FirstOrDefaultAsync(p => p.ProveedorId == proveedorId);
+
+		if (proveedor != null)
+		{
+			var detalle = proveedor.ProveedoresDetalle.FirstOrDefault(d => d.DetalleId == detalleId);
+			if(detalle != null)
+			{
+				proveedor.ProveedoresDetalle.Remove(detalle);
+				await contexto.SaveChangesAsync();
+			}
+		}
+	}
 }

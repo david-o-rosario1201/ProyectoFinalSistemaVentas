@@ -15,13 +15,16 @@ public class Proveedores
 
     [Required(ErrorMessage = "Debe ingresar un nombre.")]
 	[RegularExpression(@"^[a-zA-ZñÑ\s]+$", ErrorMessage = "Este campo no acepta números ni caracteres especiales.")]
+	[StringLength(15, ErrorMessage = "El nombre es demasiado largo, el límite es de 15 caracteres.")]
 	public string Nombre { get; set; }
 
 	[Required(ErrorMessage = "Debe ingresar una dirección.")]
+	[StringLength(70, ErrorMessage = "La dirección es demasiado larga, el límite es de 70 caracteres.")]
 	public string Direccion { get; set; }
 
 	[Required(ErrorMessage = "Debe ingresar un email")]
 	[EmailAddress(ErrorMessage = "El formato para el email no es válido.")]
+	[StringLength(40, ErrorMessage = "La email es demasiado largo, el límite es de 40 caracteres.")]
 	public string Email { get; set; }
 
 	[Required(ErrorMessage = "Debe elegir un tipo de contribuyente.")]
