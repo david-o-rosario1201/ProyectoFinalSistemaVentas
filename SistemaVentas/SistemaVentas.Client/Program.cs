@@ -12,5 +12,6 @@ builder.Services.AddScoped(http => new HttpClient
 builder.Services.AddScoped<ClientesService>();
 builder.Services.AddScoped<ProveedoresService>();
 builder.Services.AddScoped<TiposContribuyenteService>();
+builder.Services.AddScoped<CategoriasService>();
 
 await builder.Build().RunAsync();
