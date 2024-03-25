@@ -51,7 +51,7 @@
                     </div>
                     @*Categorias*@
                     <div class="col-md-3 text-center">
-                        <button type="button" class="d-block mx-auto borde" @onclick="IrAClientes">
+                        <button type="button" class="d-block mx-auto borde" @onclick="IrACategorias">
                             <h6><strong>Categor&iacute;as</strong></h6>
                             <img src="Imagenes/canasta.png" class="icon" style="width: 150px; height: auto; margin-right: 10px;" />
                         </button>
@@ -119,5 +119,9 @@
     private void Anyways()
     {
         navigation.NavigateTo("/Probar");
+    }
+    private void IrACategorias()
+    {
+        navigation.NavigateTo("/Categorias");
     }
 }
