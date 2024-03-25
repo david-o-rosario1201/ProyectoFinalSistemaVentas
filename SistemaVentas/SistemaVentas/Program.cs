@@ -22,6 +22,7 @@ builder.Services.AddScoped<ClientesService>();
 builder.Services.AddScoped<ProveedoresService>();
 builder.Services.AddScoped<TiposContribuyenteService>();
 builder.Services.AddScoped<ContactosService>();
+builder.Services.AddScoped<CategoriasService>();
 
 //builder.Services.AddScoped(c =>
 //    new HttpClient
@@ -42,6 +43,7 @@ builder.Services.AddScoped<SistemaVentas.Services.Services.ProveedoresService>()
 builder.Services.AddScoped<SistemaVentas.Services.Services.ClientesService>();
 builder.Services.AddScoped<SistemaVentas.Services.Services.TiposContribuyenteService>();
 builder.Services.AddScoped<SistemaVentas.Services.Services.ContactosService>();
+builder.Services.AddScoped<SistemaVentas.Services.Services.CategoriasService>();
 
 var app = builder.Build();
 
