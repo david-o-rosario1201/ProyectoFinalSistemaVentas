@@ -11,6 +11,9 @@ public class Categorias
 	public string Descripcion { get; set; } = string.Empty;
 	[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
 	public DateTime FechaCreacion { get; set; } = DateTime.Today;
+
+	public bool Eliminado { get; set; } = false;
+
 	[ForeignKey("CategoriaId")]
 	public ICollection<Productos> Productos { get; set; } = new List<Productos>();
 }

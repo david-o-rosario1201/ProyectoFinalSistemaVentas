@@ -13,4 +13,6 @@ public class TiposContribuyente
 	public int TipoContribuyenteId { get; set; }
 
 	public string Descripcion { get; set; }
+
+	public bool Eliminado { get; set; } = false;
 }

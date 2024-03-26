@@ -17,4 +17,6 @@ public class ProveedoresDetalle
     public int ContactoId { get; set; }
 
     public string Contacto { get; set; }
+
+	public bool Eliminado { get; set; } = false;
 }

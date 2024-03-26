@@ -29,7 +29,6 @@
 						@*FechaCreacion*@
 						<label class="form-label" for="fecha"><strong>Fecha Creaci&oacute;n:</strong></label>
 						<InputDate id="fecha" class="form-control" @bind-Value="proveedor.FechaCreacion" readonly></InputDate>
-						@* <ValidationMessage For="@(() => proveedor.FechaCreacion)"></ValidationMessage> *@
 					</div>
 					<div class="col-4">
 						@*Nombre*@
@@ -157,8 +156,6 @@
 @otro
 
 @code {
-
-	// public ProveedoresService proveedorService { get; set; }
 	public Proveedores proveedor { get; set; } = new Proveedores();
 
 	public List<TiposContribuyente> tiposContribuyente = new List<TiposContribuyente>();
@@ -170,13 +167,6 @@
 	public string mensajeEmail { get; set; } = string.Empty;
 	public string mensajeRNC { get; set; } = string.Empty;
 	public string otro { get; set; } = string.Empty;
-	// public List<Clientes> clientes = new List<Clientes>();
-	// public List<Sistemas> sistemas = new List<Sistemas>();
-	// public List<Prioridades> prioridades = new List<Prioridades>();
-	// public string mensaje { get; set; } = string.Empty;
-	// 
-	// public string message { get; set; } = string.Empty;
-	// public string ultimo { get; set; } = string.Empty;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -185,35 +175,11 @@
 		tiposContribuyente = await tipoContribuyenteService.GetTiposContribuyentes();
 		contactos = await contactoService.GetContactos();
 		mensaje = "";
-
-		// clientes = await httpClient.GetFromJsonAsync<List<Clientes>>("api/Clientes");
-		// sistemas = await httpClient.GetFromJsonAsync<List<Sistemas>>("api/Sistemas");
-		// prioridades = await httpClient.GetFromJsonAsync<List<Prioridades>>("api/Prioridades");
 	}
 
 	public async void Crear()
 	{
-		// if (!await ValidarTicket())
-		// {
-		// 	return;
-		// }
-		// else
-		// {
-		// 	var response = await httpClient.PostAsJsonAsync("api/Tickets", proveedor);
-		// 	if (response.IsSuccessStatusCode)
-		// 	{
-		// 		mensaje = "Se guardo el ticket";
-		// 		StateHasChanged();
-		// 		await Task.Delay(2000);
-		// 		Volver();
-		// 	}
-		// 	else
-		// 	{
-		// 		mensaje = "No se guardo el ticket";
-		// 	}
-		// }
-
-		if(await ValidarProveedor())
+		if (await ValidarProveedor())
 		{
 			if (String.IsNullOrEmpty(proveedor.Nota))
 				proveedor.Nota = "----";
@@ -237,8 +203,6 @@
 		StateHasChanged();
 		await Task.Delay(2000);
 		await LimpiarPantalla();
-		// proveedorService.Save(proveedor);
-
 	}
 
 	public async Task<bool> ValidarProveedor()
@@ -252,13 +216,13 @@
 		bool emailValido = true;
 		bool rncValido = true;
 
-		if(nombre != null)
+		if (nombre != null)
 		{
 			nombreValido = false;
 			mensajeNombre = "Ya existe un proveedor con este nombre";
 		}
 
-		if(email != null)
+		if (email != null)
 		{
 			emailValido = false;
 			mensajeEmail = "Ya existe un proveedor con este email";
@@ -275,7 +239,7 @@
 
 	public async Task AgregarDetalle()
 	{
-		if(!String.IsNullOrEmpty(contacto) && tipo != 0)
+		if (!String.IsNullOrEmpty(contacto) && tipo != 0)
 		{
 			if (await ValidarDetalle())
 			{
@@ -285,24 +249,6 @@
 			else
 				mensaje = "La longitud del contacto debe ser de 10 digitos";
 		}
-
-		@* if (!string.IsNullOrEmpty(message) && !string.IsNullOrEmpty(transmitter))
-		{
-			if (!await ValidarDetalle())
-			{
-				return;
-			}
-			else
-			{
-				var nuevoDetalle = new TicketsDetalle { Emisor = transmitter, Mensaje = message };
-				proveedor.TicketsDetalle.Add(nuevoDetalle);
-			}
-		}
-		else
-			mensaje = "No deben haber campos vacíos";
-
-		StateHasChanged();
-		await LimpiarPantalla(); *@
 	}
 
 	public async Task<bool> ValidarDetalle()
@@ -312,16 +258,16 @@
 		if (contacto.Length != 10)
 			return false;
 
-		foreach(var detalle in validar)
+		foreach (var detalle in validar)
 		{
-			foreach(var contactos in detalle.ProveedoresDetalle)
+			foreach (var contactos in detalle.ProveedoresDetalle)
 			{
 				if (contactos.Contacto == contacto)
 					return false;
 			}
 		}
 
-		foreach(var detalle in proveedor.ProveedoresDetalle)
+		foreach (var detalle in proveedor.ProveedoresDetalle)
 		{
 			if (detalle.Contacto == contacto)
 				return false;
@@ -337,52 +283,6 @@
 		return dato.Descripcion;
 	}
 
-	@* public async Task<bool> ValidarTicket()
-	{
-		var tickets = await httpClient.GetFromJsonAsync<List<Tickets>>("api/Tickets");
-		var asunto = tickets.Where(t => t.Asunto.Equals(proveedor.Asunto));
-		var solicitadoPor = tickets.Where(t => t.SolicitadoPor.Equals(proveedor.SolicitadoPor));
-		var descripcion = tickets.Where(t => t.Descripcion.Equals(proveedor.Descripcion));
-
-		if (asunto.Any())
-		{
-			mensaje = "Ya existe un ticket con este asunto";
-			return false;
-		}
-		if (solicitadoPor.Any())
-		{
-			mensaje = "Ya existe un ticket con este solicitado por";
-			return false;
-		}
-		if (descripcion.Any())
-		{
-			mensaje = "Ya existe un ticket con esta descripción";
-			return false;
-		}
-
-		return true;
-	} *@
-
-	@* public async Task<bool> ValidarDetalle()
-	{
-
-		foreach (var ticket in proveedor.TicketsDetalle)
-		{
-			if (ticket.Mensaje == message)
-			{
-				mensaje = "Ya existe un detalle con este mensaje";
-				return false;
-			}
-			if (ticket.Emisor == transmitter)
-			{
-				mensaje = "Ya existe un detalle con este emisor";
-				return false;
-			}
-		}
-
-		return true;
-	} *@
-
 	public async Task EliminarDetalle(ProveedoresDetalle detalle)
 	{
 		proveedor.ProveedoresDetalle.Remove(detalle);
@@ -395,17 +295,7 @@
 		mensajeEmail = string.Empty;
 		mensajeRNC = string.Empty;
 		StateHasChanged();
-		// message = string.Empty;
-		// transmitter = string.Empty;
-		// await Task.Delay(2000);
-		// mensaje = string.Empty;
 	}
-
-	// public string ObtenerDescripcion(int id)
-	// {
-	// 	// var descripcion = accesorios.FirstOrDefault(a => a.AccesorioId == id);
-	// 	// return descripcion.Descripcion;
-	// }
 
 	void Volver()
 	{
