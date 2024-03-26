@@ -13,4 +13,6 @@ public class Contactos
     public int ContactoId { get; set; }
 
     public string Descripcion { get; set; }
+
+	public bool Eliminado { get; set; } = false;
 }
