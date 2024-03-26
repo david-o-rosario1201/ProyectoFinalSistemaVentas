@@ -10,8 +10,8 @@ public class ProveedoresService(Contexto contexto)
     public async Task<IEnumerable<Proveedores>> GetProveedores()
     {
 		var proveedores = await contexto.Proveedores
-	   .Include(p => p.ProveedoresDetalle)
-	   .ToListAsync();
+	   .Include(p => p.ProveedoresDetalle.Where(d => d.Eliminado == false))
+	   .Where(p => p.Eliminado == false).ToListAsync();
 
 		return proveedores;
 	}
@@ -19,7 +19,8 @@ public class ProveedoresService(Contexto contexto)
     public async Task<Proveedores> GetProveedor(int id)
     {
 		return await contexto.Proveedores
-            .Include(d => d.ProveedoresDetalle).FirstOrDefaultAsync(p => p.ProveedorId == id);
+            .Include(d => d.ProveedoresDetalle.Where(d => d.Eliminado == false))
+			.FirstOrDefaultAsync(p => p.ProveedorId == id && p.Eliminado == false);
     }
 
     public async Task<Proveedores> Save(Proveedores proveedor)
