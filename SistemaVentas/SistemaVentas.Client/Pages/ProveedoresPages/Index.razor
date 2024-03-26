@@ -126,8 +126,6 @@
 @mensaje
 
 @code {
-	// public ProveedoresService proveedorService { get; set; }
-
 	public List<Proveedores> proveedores = new List<Proveedores>();
 	public string filtro { get; set; }
 	public string valorFiltro { get; set; }
@@ -139,10 +137,7 @@
 	protected override async Task OnInitializedAsync()
 	{
 		await Task.Delay(500);
-
-		//proveedores = await httpClient.GetFromJsonAsync<List<Proveedores>>("api/Tickets");
 		proveedores = await proveedorService.GetProveedores();
-		mensaje = "";
 
 		loading = false;
 
@@ -208,7 +203,7 @@
 				break;
 
 			case "nombre":
-				var resultadoNombre = proveedores.FirstOrDefault(p => p.Nombre == valorFiltro);
+				var resultadoNombre = proveedores.FirstOrDefault(p => p.Nombre.ToLower().Contains(valorFiltro.ToLower()));
 				if (resultadoNombre != null && 
 					(resultadoNombre.FechaCreacion >= desde && resultadoNombre.FechaCreacion <= hasta))
 				{
@@ -218,7 +213,7 @@
 				break;
 
 			case "direccion":
-				var resultadoDireccion = proveedores.Where(p => p.Direccion == valorFiltro).ToList();
+				var resultadoDireccion = proveedores.Where(p => p.Direccion.ToLower().Contains(valorFiltro.ToLower())).ToList();
 				if (resultadoDireccion != null)
 				{
 					foreach (var result in resultadoDireccion)
@@ -243,7 +238,7 @@
 				break;
 
 			case "rnc":
-				var resultadoRNC = proveedores.Where(p => p.RNC == valorFiltro).ToList();
+				var resultadoRNC = proveedores.Where(p => p.RNC.Contains(valorFiltro)).ToList();
 				if (resultadoRNC != null)
 				{
 					foreach (var result in resultadoRNC)
@@ -273,32 +268,6 @@
 				break;
 		}
 
-		// List<Proveedores> filtradoList1 = new List<Proveedores>();
-		// filtradoList1 = await httpClient.GetFromJsonAsync<List<Tickets>>("api/Tickets");
-
-		// switch (filtro)
-		// {
-		// 	case "id":
-		// 		if (int.TryParse(valorFiltro, out int id))
-		// 		{
-		// 			Filtrar(1, filtradoList1, valorFiltro);
-		// 		}
-		// 		else
-		// 		{
-		// 			mensaje = "El valor ingresado para TicketId no es válido";
-		// 			await Task.Delay(3000);
-		// 		}
-		// 		break;
-
-		// 	case "solicitado por":
-		// 		Filtrar(2, filtradoList1, valorFiltro);
-		// 		break;
-
-		// 	case "asunto":
-		// 		Filtrar(3, filtradoList1, valorFiltro);
-		// 		break;
-		// }
-
 		StateHasChanged();
 		await LimpiarPantalla();
 	}
@@ -307,61 +276,6 @@
 	{
 		proveedores = await proveedorService.GetProveedores();
 	}
-
-	public async Task Filtrar(int pos, List<Proveedores> filtrados, string dato)
-	{
-		// List<Tickets> filtradoList2 = new List<Tickets>();
-
-		// foreach (var filtrado in filtrados)
-		// {
-		// 	if (pos == 1)
-		// 	{
-		// 		if (filtrado.TicketId == int.Parse(dato))
-		// 			filtradoList2.Add(filtrado);
-		// 	}
-		// 	else if (pos == 2)
-		// 	{
-		// 		if (filtrado.SolicitadoPor == dato)
-		// 			filtradoList2.Add(filtrado);
-		// 	}
-		// 	else
-		// 	{
-		// 		if (filtrado.Asunto == dato)
-		// 			filtradoList2.Add(filtrado);
-		// 	}
-
-		// }
-
-
-		// if (filtradoList2.Count > 0)
-		// 	DatosFiltrados(filtradoList2);
-		// else
-		// {
-		// 	mensaje = "No se encontraron resultados";
-		// 	await Task.Delay(3000);
-		// }
-	}
-
-	// public async Task DatosFiltrados(List<Tickets> valor)
-	// {
-	// 	List<Tickets> filtradoList2 = new List<Tickets>();
-	// 	foreach (var filtrado in valor)
-	// 	{
-	// 		if (filtrado.Fecha >= desde && filtrado.Fecha <= hasta)
-	// 			filtradoList2.Add(filtrado);
-	// 	}
-
-	// 	if (filtradoList2.Count != 0)
-	// 	{
-	// 		ticketsList = filtradoList2;
-	// 		mensaje = "Se encontraron resultados";
-	// 	}
-	// 	else
-	// 	{
-	// 		mensaje = "No se encontraron resultados. Revise si el dato está entre la fecha indicada.";
-	// 		await Task.Delay(3000);
-	// 	}
-	// }
 
 	public async Task LimpiarPantalla()
 	{
