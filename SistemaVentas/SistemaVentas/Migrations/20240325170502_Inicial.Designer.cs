@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaVentas.Context.DAL;
@@ -11,24 +12,33 @@ using SistemaVentas.Context.DAL;
 namespace SistemaVentas.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20240324015916_Inicial")]
+    [Migration("20240325170502_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("SistemaVentas.Models.Models.Categorias", b =>
                 {
                     b.Property<int>("CategoriaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoriaId"));
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("bit");
 
                     b.HasKey("CategoriaId");
 
@@ -38,52 +48,62 @@ namespace SistemaVentas.Migrations
                         new
                         {
                             CategoriaId = 1,
-                            Descripcion = "Platos Entrantes"
+                            Descripcion = "Platos Entrantes",
+                            Eliminado = false
                         },
                         new
                         {
                             CategoriaId = 2,
-                            Descripcion = "Platos Principales"
+                            Descripcion = "Platos Principales",
+                            Eliminado = false
                         },
                         new
                         {
                             CategoriaId = 3,
-                            Descripcion = "Postres"
+                            Descripcion = "Postres",
+                            Eliminado = false
                         },
                         new
                         {
                             CategoriaId = 4,
-                            Descripcion = "Especiales del día"
+                            Descripcion = "Especiales del día",
+                            Eliminado = false
                         },
                         new
                         {
                             CategoriaId = 5,
-                            Descripcion = "Platos de Temporada"
+                            Descripcion = "Platos de Temporada",
+                            Eliminado = false
                         },
                         new
                         {
                             CategoriaId = 6,
-                            Descripcion = "Especialidades Extranjeras"
+                            Descripcion = "Especialidades Extranjeras",
+                            Eliminado = false
                         },
                         new
                         {
                             CategoriaId = 7,
-                            Descripcion = "Bebidas no alcohólicas"
+                            Descripcion = "Bebidas no alcohólicas",
+                            Eliminado = false
                         },
                         new
                         {
                             CategoriaId = 8,
-                            Descripcion = "Bebidas alcohólicas"
+                            Descripcion = "Bebidas alcohólicas",
+                            Eliminado = false
                         },
                         new
                         {
                             CategoriaId = 9,
-                            Descripcion = "Cócteles"
+                            Descripcion = "Cócteles",
+                            Eliminado = false
                         },
                         new
                         {
                             CategoriaId = 10,
-                            Descripcion = "Tapas"
+                            Descripcion = "Tapas",
+                            Eliminado = false
                         });
                 });
 
@@ -91,29 +111,31 @@ namespace SistemaVentas.Migrations
                 {
                     b.Property<int>("ClienteId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClienteId"));
 
                     b.Property<string>("Cedula")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Direccion")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Eliminado")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Telefono")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ClienteId");
 
@@ -124,11 +146,16 @@ namespace SistemaVentas.Migrations
                 {
                     b.Property<int>("ContactoId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContactoId"));
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("bit");
 
                     b.HasKey("ContactoId");
 
@@ -138,12 +165,14 @@ namespace SistemaVentas.Migrations
                         new
                         {
                             ContactoId = 1,
-                            Descripcion = "Teléfono"
+                            Descripcion = "Teléfono",
+                            Eliminado = false
                         },
                         new
                         {
                             ContactoId = 2,
-                            Descripcion = "Fax"
+                            Descripcion = "Fax",
+                            Eliminado = false
                         });
                 });
 
@@ -151,19 +180,21 @@ namespace SistemaVentas.Migrations
                 {
                     b.Property<int>("ProductoDetalleId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductoDetalleId"));
 
                     b.Property<float>("Costo")
-                        .HasColumnType("REAL");
+                        .HasColumnType("real");
 
                     b.Property<bool>("Eliminado")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<int>("ProductoId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("ProveedorId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("ProductoDetalleId");
 
@@ -176,38 +207,40 @@ namespace SistemaVentas.Migrations
                 {
                     b.Property<int>("ProductoId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductoId"));
 
                     b.Property<string>("Categoria")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CategoriaId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Eliminado")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<int>("Existencia")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nota")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("Precio")
-                        .HasColumnType("REAL");
+                        .HasColumnType("real");
 
                     b.HasKey("ProductoId");
 
@@ -220,37 +253,43 @@ namespace SistemaVentas.Migrations
                 {
                     b.Property<int>("ProveedorId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProveedorId"));
 
                     b.Property<string>("Direccion")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
 
                     b.Property<bool>("Eliminado")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Nota")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("RNC")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TipoContribuyente")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProveedorId");
 
@@ -261,17 +300,22 @@ namespace SistemaVentas.Migrations
                 {
                     b.Property<int>("DetalleId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DetalleId"));
 
                     b.Property<string>("Contacto")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ContactoId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("bit");
 
                     b.Property<int>("ProveedorId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("DetalleId");
 
@@ -284,11 +328,13 @@ namespace SistemaVentas.Migrations
                 {
                     b.Property<int>("TipoContribuyenteId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TipoContribuyenteId"));
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TipoContribuyenteId");
 
@@ -311,22 +357,24 @@ namespace SistemaVentas.Migrations
                 {
                     b.Property<int>("VentaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VentaId"));
 
                     b.Property<float>("Devolucion")
-                        .HasColumnType("REAL");
+                        .HasColumnType("real");
 
                     b.Property<bool>("Eliminado")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("Fecha")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime2");
 
                     b.Property<float>("Pago")
-                        .HasColumnType("REAL");
+                        .HasColumnType("real");
 
                     b.Property<float>("SubTotal")
-                        .HasColumnType("REAL");
+                        .HasColumnType("real");
 
                     b.HasKey("VentaId");
 
@@ -337,19 +385,21 @@ namespace SistemaVentas.Migrations
                 {
                     b.Property<int>("VentaDetalleId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VentaDetalleId"));
 
                     b.Property<float>("Cantidad")
-                        .HasColumnType("REAL");
+                        .HasColumnType("real");
 
                     b.Property<bool>("Eliminado")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<int>("ProductoId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("VentaId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("VentaDetalleId");
 
