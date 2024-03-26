@@ -16,7 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContextFactory<Contexto>
-    (o => o.UseSqlite(builder.Configuration.GetConnectionString("ConStr")));
+    (o => o.UseSqlServer(builder.Configuration.GetConnectionString("ConStr")));
 
 builder.Services.AddScoped<ClientesService>();
 builder.Services.AddScoped<ProveedoresService>();
